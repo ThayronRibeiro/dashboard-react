@@ -14,7 +14,7 @@ export const Teste = () => {
     }
   }, [authenticated]);
 
-  if (auth) {
+  if (auth == "true") {
     return (
       <>
         <Menu />

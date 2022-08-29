@@ -1,10 +1,16 @@
 import * as SC from "../../styles/Menu";
 import { FaBars, FaUserCircle, FaArrowLeft, FaHome } from "react-icons/fa";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Menu = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const nav = useNavigate();
+
+  const authRemove = () => {
+    localStorage.setItem("authenticated", "false");
+    nav("/");
+  };
 
   return (
     <>
@@ -13,7 +19,7 @@ export const Menu = () => {
           <h2 onClick={() => setMenuOpen(!menuOpen)}>
             <FaBars />
           </h2>
-          <h2 onClick={() => localStorage.removeItem("authenticated")}>
+          <h2 onClick={authRemove}>
             <Link to="/">
               <FaUserCircle />
             </Link>

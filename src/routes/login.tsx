@@ -34,14 +34,15 @@ export const Login = ({ loginOk }: Props) => {
     }
   };
 
-  if (auth) {
+  if (auth == "true") {
     return <Navigate replace to="/home" />;
   } else
     return (
       <SC.ContainerLogin>
         <SC.LoginArea>
-          <h2>LOGIN</h2>
+          <h2>Login</h2>
           <form onSubmit={handleSubmit}>
+            <label>Usuário</label>
             <input
               type="text"
               name="Username"
@@ -49,15 +50,28 @@ export const Login = ({ loginOk }: Props) => {
               onChange={(e) => setusername(e.target.value)}
               placeholder="admin"
             />
+            <label>Senha</label>
             <input
               type="password"
               name="Password"
               onChange={(e) => setpassword(e.target.value)}
               placeholder="123"
             />
-            <input type="submit" value="Submit" onClick={loginOk} />
+
+            <input type="submit" value="Entrar" onClick={loginOk} />
+            <span>
+              Não possui conta?{" "}
+              <strong onClick={() => navigate("/cadastro")}>Registre-se</strong>
+            </span>
           </form>
         </SC.LoginArea>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+          <path
+            fill="#230bf9"
+            fill-opacity="1"
+            d="M0,64L120,80C240,96,480,128,720,138.7C960,149,1200,139,1320,133.3L1440,128L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"
+          ></path>
+        </svg>
       </SC.ContainerLogin>
     );
 };
