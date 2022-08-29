@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Menu } from "../components/Menu";
+import * as SC from "../styles/ContainerContent";
 
 export const Home = () => {
   const auth = localStorage.getItem("authenticated");
@@ -31,7 +32,9 @@ export const Home = () => {
     return (
       <>
         <Menu />
-        <h2>Home</h2>
+        <SC.ContainerContent>
+          <h2>Home</h2>
+        </SC.ContainerContent>
       </>
     );
   } else {

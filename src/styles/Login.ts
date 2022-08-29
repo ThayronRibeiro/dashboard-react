@@ -78,10 +78,3 @@ export const LoginArea = styled.div`
     }
   }
 `;
-
-export const Input = styled.input.attrs({
-  type: "submit",
-  value: "Login",
-})`
-  background-color: var(--normalBlue);
-`;
