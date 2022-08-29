@@ -13,7 +13,7 @@ export const Menu = () => {
           <h2 onClick={() => setMenuOpen(!menuOpen)}>
             <FaBars />
           </h2>
-          <h2>
+          <h2 onClick={() => localStorage.removeItem("authenticated")}>
             <Link to="/">
               <FaUserCircle />
             </Link>

@@ -6,6 +6,8 @@ import { ContainerMain } from "./styles/ContainerMain";
 import { BrowserRouter, Link, Routes, Route, Navigate } from "react-router-dom";
 import { ContainerContent } from "./styles/ContainerContent";
 
+import { RoutesApp } from "./routes/RoutesApp";
+
 //ROTAS
 import { Login } from "./routes/login";
 import { Home } from "./routes/home";
@@ -13,6 +15,12 @@ import { Teste } from "./routes/teste";
 
 function App() {
   const [login, setLogin] = useState(false);
+
+  const Private = ({ Item }: any) => {
+    let signed = localStorage.getItem("authenticated");
+
+    return signed ? Item : <Login loginOk={handleLoginOk} />;
+  };
 
   const handleLoginOk = () => {
     setLogin(true);
@@ -22,6 +30,7 @@ function App() {
     const loggedInUser = localStorage.getItem("authenticated");
     if (loggedInUser == "true") {
       setLogin(true);
+      <Navigate replace to="/home" />;
     } else {
       setLogin(false);
     }
@@ -29,14 +38,17 @@ function App() {
 
   return (
     <>
+      <RoutesApp />
       <Body />
-      <ContainerMain>
+      {/* <ContainerMain>
         <BrowserRouter>
           {login && <Menu />}
           <ContainerContent>
             <Routes>
-              {/* <Route path="*"> */}
-              <Route index element={<Login loginOk={handleLoginOk} />} />
+              <Route
+                index
+                element={<Private item={<Home />} loginOk={handleLoginOk} />}
+              />
               <Route path="/home" element={<Home />} />
               <Route path="/teste" element={<Teste />} />
               <Route path="/novo" element={<Novo />} />
@@ -44,11 +56,10 @@ function App() {
                 path="/login"
                 element={<Login loginOk={handleLoginOk} />}
               />
-              {/* </Route> */}
             </Routes>
           </ContainerContent>
         </BrowserRouter>
-      </ContainerMain>
+      </ContainerMain> */}
     </>
   );
 }
