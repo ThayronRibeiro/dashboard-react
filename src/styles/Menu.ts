@@ -6,6 +6,7 @@ export const Menu = styled.div`
   color: var(--white);
   display: flex;
   align-items: center;
+  z-index: 998;
 
   div {
     display: flex;
@@ -67,5 +68,40 @@ export const MenuOpen = styled.div`
     text-decoration: none;
     gap: 10px;
     font-size: 20px;
+  }
+`;
+
+export const MenuConfigContainer = styled.div`
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100px;
+  z-index: 1;
+`;
+
+export const MenuConfig = styled.div`
+  position: relative;
+  margin-top: 35px;
+  right: 30%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--white);
+  heigth: 200px;
+  width: 150px;
+  border-radius: 5px;
+
+  transition: all ease 0.5s;
+  -webkit-box-shadow: 1px 6px 10px -3px rgba(0, 0, 0, 0.47);
+  box-shadow: 1px 6px 10px -3px rgba(0, 0, 0, 0.47);
+
+  span {
+    padding: 5px 15px;
+    width: 100%;
+    border-bottom: #d1d1d1 1px solid;
+  }
+
+  a {
+    text-decoration: none;
+    color: #000;
   }
 `;

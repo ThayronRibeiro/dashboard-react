@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 export const Menu = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [menuConfigOpen, setMenuConfigOpen] = useState(false);
   const nav = useNavigate();
 
   const authRemove = () => {
@@ -19,13 +20,22 @@ export const Menu = () => {
           <h2 onClick={() => setMenuOpen(!menuOpen)}>
             <FaBars />
           </h2>
-          <h2 onClick={authRemove}>
-            <Link to="/">
-              <FaUserCircle />
-            </Link>
+          <h2 onClick={() => setMenuConfigOpen(!menuConfigOpen)}>
+            <FaUserCircle />
           </h2>
         </div>
       </SC.Menu>
+
+      {menuConfigOpen && (
+        <SC.MenuConfigContainer>
+          <SC.MenuConfig>
+            <span>Configurações</span>
+            <span onClick={authRemove}>
+              <Link to="/">Logout</Link>
+            </span>
+          </SC.MenuConfig>
+        </SC.MenuConfigContainer>
+      )}
 
       {menuOpen && (
         <SC.MenuOpen>

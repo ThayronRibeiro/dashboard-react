@@ -37,7 +37,6 @@ export const Login = ({ loginOk }: Props) => {
       navigate("/home");
     } else {
       let div = document.getElementById("form");
-
       if (div != null) {
         div.innerHTML = `<p>Usuário ou senha incorretos!</p>`;
       }
