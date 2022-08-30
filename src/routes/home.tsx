@@ -13,12 +13,8 @@ export const Home = () => {
         nav("/");
         break;
     }
-    // if (auth == "false") {
-    //   console.log("Teste Ok!");
-    //   nav("/");
-    // } else {
-    //   <Navigate replace to="/" />;
-    // }
+
+    document.title = "Home | Dashboard ReactJs";
   }, []);
 
   // useEffect(() => {

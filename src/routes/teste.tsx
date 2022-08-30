@@ -12,6 +12,8 @@ export const Teste = () => {
     if (loggedInUser) {
       setauthenticated(loggedInUser);
     }
+
+    document.title = "Teste | Dashboard ReactJs";
   }, [authenticated]);
 
   if (auth == "true") {
