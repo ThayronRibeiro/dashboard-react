@@ -27,7 +27,9 @@ export const Menu = () => {
       </SC.Menu>
 
       {menuConfigOpen && (
-        <SC.MenuConfigContainer>
+        <SC.MenuConfigContainer
+          onClick={() => setMenuConfigOpen(!menuConfigOpen)}
+        >
           <SC.MenuConfig>
             <span>Configurações</span>
             <span onClick={authRemove}>
