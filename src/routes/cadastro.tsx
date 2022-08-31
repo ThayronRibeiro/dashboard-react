@@ -40,7 +40,7 @@ export const Cadastro = () => {
     } else {
       const users = localStorage.getItem("usersDb");
       if (users) {
-        const usersArray = JSON.parse(users);
+        const usersArray: Users[] = JSON.parse(users);
 
         usersArray.push({
           userName: username,
