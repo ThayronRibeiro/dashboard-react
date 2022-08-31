@@ -69,6 +69,12 @@ export const MenuOpen = styled.div`
     gap: 10px;
     font-size: 20px;
   }
+
+  @media screen and (min-width: 1280px) {
+    & {
+      width: 20vw;
+    }
+  }
 `;
 
 export const MenuConfigContainer = styled.div`
@@ -85,6 +91,12 @@ export const MenuConfigContainer = styled.div`
     right: 25px;
     color: var(--white);
     cursor: pointer;
+  }
+
+  @media screen and (min-width: 1280px) {
+    & {
+      padding-left: 86vw;
+    }
   }
 `;
 
