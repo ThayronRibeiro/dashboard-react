@@ -47,6 +47,11 @@ export const Login = ({ loginOk }: Props) => {
           let div = document.getElementById("form");
           if (div != null) {
             div.innerHTML = `<p>Usuário ou senha incorretos!</p>`;
+            setTimeout(() => {
+              if (div != null) {
+                div.innerHTML = "";
+              }
+            }, 2000);
           }
         }
       });
@@ -54,6 +59,11 @@ export const Login = ({ loginOk }: Props) => {
       let div = document.getElementById("form");
       if (div != null) {
         div.innerHTML = `<p>Não há usuários cadastrados!</p>`;
+        setTimeout(() => {
+          if (div != null) {
+            div.innerHTML = "";
+          }
+        }, 2000);
       }
     }
 
