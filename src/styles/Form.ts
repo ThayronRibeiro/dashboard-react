@@ -77,6 +77,8 @@ export const FormArea = styled.div<FormAreaProps>`
       font-weight: 700;
       font-size: 20px;
       transition: all ease 0.5s;
+      -webkit-appearance: none;
+      -moz-appearance: none;
     }
 
     input[type="submit"]:hover {
