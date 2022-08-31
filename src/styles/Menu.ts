@@ -76,6 +76,14 @@ export const MenuConfigContainer = styled.div`
   top: 0;
   right: 0;
   height: 100vh;
+
+  h2 {
+    position: absolute;
+    top: 10px;
+    right: 16.5%;
+    color: var(--white);
+    cursor: pointer;
+  }
 `;
 
 export const MenuConfig = styled.div`

@@ -26,17 +26,23 @@ export const Menu = () => {
           <h2 onClick={() => setMenuOpen(!menuOpen)}>
             <FaBars />
           </h2>
-          <h2 onClick={() => setMenuConfigOpen(!menuConfigOpen)}>
-            <FaUserCircle />
-          </h2>
+          {!menuConfigOpen && (
+            <h2 onClick={() => setMenuConfigOpen(!menuConfigOpen)}>
+              <FaUserCircle />
+            </h2>
+          )}
         </div>
       </SC.Menu>
 
       {menuConfigOpen && (
         <SC.MenuConfigContainer
-          // onClick={() => setMenuConfigOpen(!menuConfigOpen)}
-          onClickCapture={() => setMenuConfigOpen(!menuConfigOpen)}
+          onClick={() => setMenuConfigOpen(!menuConfigOpen)}
+
+          //onClickCapture={() => setMenuConfigOpen(!menuConfigOpen)}
         >
+          <h2 onClick={() => setMenuConfigOpen(!menuConfigOpen)}>
+            <FaUserCircle />
+          </h2>
           <SC.MenuConfig>
             <span>Configurações</span>
             <span onClick={authRemove}>
