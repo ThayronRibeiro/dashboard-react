@@ -59,7 +59,7 @@ export const Cadastro = () => {
             value={username}
             placeholder="Digite seu usuário!"
             {...register("userName", { required: true })}
-            onChange={(e) => setusername(e.target.value)}
+            onChange={(e) => setusername(e.target.value.toLowerCase())}
             errors={errors.userName && !username}
           />
           {errors.userName && !username && <p>Digite seu usuário!</p>}
