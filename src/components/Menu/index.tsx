@@ -1,5 +1,11 @@
 import * as SC from "../../styles/Menu";
-import { FaBars, FaUserCircle, FaArrowLeft, FaHome } from "react-icons/fa";
+import {
+  FaBars,
+  FaUserCircle,
+  FaArrowLeft,
+  FaHome,
+  FaSignOutAlt,
+} from "react-icons/fa";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -28,12 +34,16 @@ export const Menu = () => {
 
       {menuConfigOpen && (
         <SC.MenuConfigContainer
-          onClick={() => setMenuConfigOpen(!menuConfigOpen)}
+          // onClick={() => setMenuConfigOpen(!menuConfigOpen)}
+          onClickCapture={() => setMenuConfigOpen(!menuConfigOpen)}
         >
           <SC.MenuConfig>
             <span>Configurações</span>
             <span onClick={authRemove}>
-              <Link to="/">Logout</Link>
+              <Link to="/">
+                <FaSignOutAlt />
+                Sair
+              </Link>
             </span>
           </SC.MenuConfig>
         </SC.MenuConfigContainer>

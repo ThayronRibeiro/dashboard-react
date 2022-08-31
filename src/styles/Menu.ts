@@ -75,8 +75,7 @@ export const MenuConfigContainer = styled.div`
   position: fixed;
   top: 0;
   right: 0;
-  height: 100px;
-  z-index: 1;
+  height: 100vh;
 `;
 
 export const MenuConfig = styled.div`
@@ -86,7 +85,6 @@ export const MenuConfig = styled.div`
   display: flex;
   flex-direction: column;
   background-color: var(--white);
-  heigth: 200px;
   width: 150px;
   border-radius: 5px;
 
@@ -101,6 +99,9 @@ export const MenuConfig = styled.div`
   }
 
   a {
+    display: flex;
+    align-items: center;
+    gap: 5px;
     text-decoration: none;
     color: #000;
   }
