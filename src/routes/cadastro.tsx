@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import * as SC from "../styles/Form";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import alertify from "alertifyjs";
+import "alertifyjs/build/alertify.min.js";
+import "alertifyjs/build/css/alertify.min.css";
 
 type Users = {
   userName?: string;
@@ -14,6 +17,8 @@ export const Cadastro = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const users = [{ username: "admin", password: "123" }];
   const [usersDb, setUsersDb] = useState<Users[]>([]);
+
+  alertify.set("notifier", "position", "top-right");
 
   useEffect(() => {
     document.title = "Cadastro | Dashboard ReactJs";
@@ -48,9 +53,7 @@ export const Cadastro = () => {
         });
 
         localStorage.setItem("usersDb", JSON.stringify(usersArray));
-        alert(
-          "Usuário cadastrado com sucesso! Você será redirecionado para o login!"
-        );
+        alertify.success("Usuário cadastrado com sucesso!");
         navigate("/");
       } else {
         usersDb.push({
@@ -59,9 +62,7 @@ export const Cadastro = () => {
         });
         localStorage.setItem("usersDb", JSON.stringify(usersDb));
         console.log(localStorage.getItem("usersDb"));
-        alert(
-          "Usuário cadastrado com sucesso! Você será redirecionado para o login!"
-        );
+        alertify.success("Usuário cadastrado com sucesso!");
         navigate("/");
       }
     }
