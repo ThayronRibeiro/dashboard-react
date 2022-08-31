@@ -76,11 +76,13 @@ export const MenuConfigContainer = styled.div`
   top: 0;
   right: 0;
   height: 100vh;
+  width: 100vw;
+  padding-left: 50vw; //posicionar na tela
 
   h2 {
     position: absolute;
     top: 10px;
-    right: 16.5%;
+    right: 25px;
     color: var(--white);
     cursor: pointer;
   }
@@ -89,13 +91,12 @@ export const MenuConfigContainer = styled.div`
 export const MenuConfig = styled.div`
   position: relative;
   margin-top: 35px;
-  right: 30%;
+  right: 0;
   display: flex;
   flex-direction: column;
   background-color: var(--white);
   width: 150px;
   border-radius: 5px;
-
   transition: all ease 0.5s;
   -webkit-box-shadow: 1px 6px 10px -3px rgba(0, 0, 0, 0.47);
   box-shadow: 1px 6px 10px -3px rgba(0, 0, 0, 0.47);

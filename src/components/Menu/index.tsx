@@ -44,7 +44,9 @@ export const Menu = () => {
             <FaUserCircle />
           </h2>
           <SC.MenuConfig>
-            <span>Configurações</span>
+            <span>
+              <Link to="/configuracoes">Configurações</Link>
+            </span>
             <span onClick={authRemove}>
               <Link to="/">
                 <FaSignOutAlt />

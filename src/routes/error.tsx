@@ -13,7 +13,7 @@ export const ErrorPage = () => {
           <img alt="search" src={searchWhiteIcon} />
         </div>
         <h3>
-          Mas não se preocupe! Continue navegando clicando no botão abaixo!
+          Mas não se preocupe, para continuar navegando clique no botão abaixo!
         </h3>
 
         <Button onClick={() => nav("/")}>Voltar a navegar</Button>

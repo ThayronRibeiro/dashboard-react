@@ -50,6 +50,11 @@ export const Login = ({ loginOk }: Props) => {
           }
         }
       });
+    } else {
+      let div = document.getElementById("form");
+      if (div != null) {
+        div.innerHTML = `<p>Não há usuários cadastrados!</p>`;
+      }
     }
 
     // if (account && account.password === data.password) {

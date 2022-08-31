@@ -38,13 +38,32 @@ export const Cadastro = () => {
         div.innerHTML = `<p>As senhas não coincidem!</p>`;
       }
     } else {
-      usersDb.push({
-        userName: username,
-        password: password,
-      });
-      localStorage.setItem("usersDb", JSON.stringify(usersDb));
-      console.log(localStorage.getItem("usersDb"));
-      navigate("/");
+      const users = localStorage.getItem("usersDb");
+      if (users) {
+        const usersArray = JSON.parse(users);
+
+        usersArray.push({
+          userName: username,
+          password: password,
+        });
+
+        localStorage.setItem("usersDb", JSON.stringify(usersArray));
+        alert(
+          "Usuário cadastrado com sucesso! Você será redirecionado para o login!"
+        );
+        navigate("/");
+      } else {
+        usersDb.push({
+          userName: username,
+          password: password,
+        });
+        localStorage.setItem("usersDb", JSON.stringify(usersDb));
+        console.log(localStorage.getItem("usersDb"));
+        alert(
+          "Usuário cadastrado com sucesso! Você será redirecionado para o login!"
+        );
+        navigate("/");
+      }
     }
   };
   return (
