@@ -16,7 +16,7 @@ export const Cadastro = () => {
   const [usersDb, setUsersDb] = useState<Users[]>([]);
 
   useEffect(() => {
-    document.title = "Login | Dashboard ReactJs";
+    document.title = "Cadastro | Dashboard ReactJs";
   }, []);
 
   const navigate = useNavigate();
