@@ -103,3 +103,27 @@ export const InputField = styled.input<InputFieldProps>`
       !props.errors ? "var(--normalBlue) 2px solid;" : "red 2px solid;"};
   }
 `;
+
+export const ContainerCadastro = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: var(--white);
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+
+  div {
+  }
+
+  svg {
+    position: absolute;
+    bottom: 0;
+    font-size: 3em;
+    z-index: -1;
+  }
+`;

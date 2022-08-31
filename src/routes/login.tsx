@@ -30,17 +30,38 @@ export const Login = ({ loginOk }: Props) => {
 
   const onSubmit = (data: any) => {
     const account = users.find((user) => user.username === data.userName);
+    const usersDb = localStorage.getItem("usersDb");
+    if (usersDb) {
+      const array = JSON.parse(usersDb);
 
-    if (account && account.password === data.password) {
-      setauthenticated(true);
-      localStorage.setItem("authenticated", "true");
-      navigate("/home");
-    } else {
-      let div = document.getElementById("form");
-      if (div != null) {
-        div.innerHTML = `<p>Usuário ou senha incorretos!</p>`;
-      }
+      array.map(() => {
+        const accountLogin = array.find(
+          (user: any) => user.userName === data.userName
+        );
+
+        if (accountLogin && accountLogin.password === data.password) {
+          setauthenticated(true);
+          localStorage.setItem("authenticated", "true");
+          navigate("/home");
+        } else {
+          let div = document.getElementById("form");
+          if (div != null) {
+            div.innerHTML = `<p>Usuário ou senha incorretos!</p>`;
+          }
+        }
+      });
     }
+
+    // if (account && account.password === data.password) {
+    //   setauthenticated(true);
+    //   localStorage.setItem("authenticated", "true");
+    //   navigate("/home");
+    // } else {
+    //   let div = document.getElementById("form");
+    //   if (div != null) {
+    //     div.innerHTML = `<p>Usuário ou senha incorretos!</p>`;
+    //   }
+    // }
   };
 
   if (auth == "true") {
@@ -56,16 +77,16 @@ export const Login = ({ loginOk }: Props) => {
               id="userName"
               type="text"
               value={username}
-              placeholder="admin"
+              placeholder="Digite seu usuário"
               {...register("userName", { required: true })}
-              onChange={(e) => setusername(e.target.value)}
+              onChange={(e) => setusername(e.target.value.toLowerCase())}
               errors={errors.userName && !username}
             />
             {errors.userName && !username && <p>Digite seu usuário!</p>}
             <label>Senha</label>
             <SC.InputField
               type="password"
-              placeholder="123"
+              placeholder="Digite sua senha"
               value={password}
               {...register("password", { required: true })}
               onChange={(e) => setpassword(e.target.value)}
