@@ -68,7 +68,8 @@ export const Cadastro = () => {
   };
   return (
     <SC.ContainerCadastro>
-      <SC.FormArea>
+      <div className="cadastroAside"></div>
+      <SC.FormArea type="Cadastro">
         <h2>Cadastro</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <label>Usuário</label>

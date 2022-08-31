@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import cadastroBg from "../assets/images/cadastroBg.jpg";
+
 export const ContainerLogin = styled.div`
   display: flex;
   flex-direction: column;
@@ -23,6 +25,7 @@ export const ContainerLogin = styled.div`
 
 type FormAreaProps = {
   errors?: any;
+  type?: string;
 };
 
 export const FormArea = styled.div<FormAreaProps>`
@@ -85,6 +88,14 @@ export const FormArea = styled.div<FormAreaProps>`
       opacity: 0.7;
     }
   }
+
+  @media screen and (min-width: 1280px) {
+    & {
+      min-width: ${(props) => (props.type = "Cadastro" ? "40vw" : "300px")};
+      justify-content: ${(props) =>
+        (props.type = "Cadastro" ? "flex-start" : "center")};
+    }
+  }
 `;
 
 type InputFieldProps = {
@@ -119,13 +130,30 @@ export const ContainerCadastro = styled.div`
   justify-content: center;
   z-index: 999;
 
-  div {
-  }
-
   svg {
     position: absolute;
     bottom: 0;
     font-size: 3em;
     z-index: -1;
+  }
+
+  @media screen and (min-width: 1280px) {
+    & {
+      flex-direction: row;
+      justify-content: space-between;
+
+      div:nth-child(1) {
+        width: 60vw;
+        height: 100vh;
+        background-image: url(${cadastroBg});
+        background-size: cover;
+        //background-color: var(--normalBlue);
+        border-right: var(--babyBlue) 15px solid;
+      }
+    }
+
+    svg {
+      display: none;
+    }
   }
 `;

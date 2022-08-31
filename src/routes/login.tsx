@@ -84,7 +84,7 @@ export const Login = ({ loginOk }: Props) => {
   } else
     return (
       <SC.ContainerLogin>
-        <SC.FormArea>
+        <SC.FormArea type="Login">
           <h2>Login</h2>
           <form onSubmit={handleSubmit(onSubmit)}>
             <label>Usuário</label>
