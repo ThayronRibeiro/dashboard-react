@@ -138,7 +138,11 @@ export const Login = ({ loginOk }: Props) => {
           } else {
             account.password = passwordChange;
             localStorage.setItem("usersDb", JSON.stringify(usersArray));
-            setShowModal(false);
+            setStepChangePassword(1);
+            setShowModal(!showModal);
+            setUsernameChange("");
+            setPasswordChange("");
+            setConfirmPasswordChange("");
             alertify.success("Senha alterada com sucesso!");
           }
         }
