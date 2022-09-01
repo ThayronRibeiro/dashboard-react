@@ -51,6 +51,12 @@ export const ModalContent = styled.div`
       opacity: 0.8;
     }
   }
+
+  @media screen and (min-width: 768px) {
+    & {
+      max-width: 25vw;
+    }
+  }
 `;
 
 export const ButtonClose = styled.div`
