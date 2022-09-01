@@ -6,7 +6,7 @@ import alertify from "alertifyjs";
 import "alertifyjs/build/alertify.min.js";
 import "alertifyjs/build/css/alertify.min.css";
 
-type Users = {
+export type Users = {
   userName?: string;
   password?: string;
 };
@@ -35,37 +35,72 @@ export const Cadastro = () => {
   } = useForm();
 
   const onSubmit = (data: any) => {
-    const account = users.find((user) => user.username === data.userName);
+    const users = localStorage.getItem("usersDb");
+    if (users) {
+      const usersArray: Users[] = JSON.parse(users);
+      const account = usersArray.find(
+        (user) => user.userName === data.userName
+      );
+      if (account) {
+        alertify.error("Usuário já cadastrado!");
+      } else {
+        if (password != confirmPassword) {
+          let div = document.getElementById("form");
+          if (div != null) {
+            div.innerHTML = `<p>As senhas não coincidem!</p>`;
+          }
+        } else {
+          usersArray.push({
+            userName: username,
+            password: password,
+          });
 
-    if (password != confirmPassword) {
-      let div = document.getElementById("form");
-      if (div != null) {
-        div.innerHTML = `<p>As senhas não coincidem!</p>`;
+          localStorage.setItem("usersDb", JSON.stringify(usersArray));
+          alertify.success("Usuário cadastrado com sucesso!");
+          navigate("/");
+        }
       }
     } else {
-      const users = localStorage.getItem("usersDb");
-      if (users) {
-        const usersArray: Users[] = JSON.parse(users);
-
-        usersArray.push({
-          userName: username,
-          password: password,
-        });
-
-        localStorage.setItem("usersDb", JSON.stringify(usersArray));
-        alertify.success("Usuário cadastrado com sucesso!");
-        navigate("/");
-      } else {
-        usersDb.push({
-          userName: username,
-          password: password,
-        });
-        localStorage.setItem("usersDb", JSON.stringify(usersDb));
-        console.log(localStorage.getItem("usersDb"));
-        alertify.success("Usuário cadastrado com sucesso!");
-        navigate("/");
-      }
+      usersDb.push({
+        userName: username,
+        password: password,
+      });
+      localStorage.setItem("usersDb", JSON.stringify(usersDb));
+      console.log(localStorage.getItem("usersDb"));
+      alertify.success("Usuário cadastrado com sucesso!");
+      navigate("/");
     }
+    // const account = usersDb.find((user) => user.userName === data.userName);
+
+    // if (password != confirmPassword) {
+    //   let div = document.getElementById("form");
+    //   if (div != null) {
+    //     div.innerHTML = `<p>As senhas não coincidem!</p>`;
+    //   }
+    // } else {
+    //   const users = localStorage.getItem("usersDb");
+    //   if (users) {
+    //     const usersArray: Users[] = JSON.parse(users);
+
+    //     usersArray.push({
+    //       userName: username,
+    //       password: password,
+    //     });
+
+    //     localStorage.setItem("usersDb", JSON.stringify(usersArray));
+    //     alertify.success("Usuário cadastrado com sucesso!");
+    //     navigate("/");
+    //   } else {
+    //     usersDb.push({
+    //       userName: username,
+    //       password: password,
+    //     });
+    //     localStorage.setItem("usersDb", JSON.stringify(usersDb));
+    //     console.log(localStorage.getItem("usersDb"));
+    //     alertify.success("Usuário cadastrado com sucesso!");
+    //     navigate("/");
+    //   }
+    // }
   };
   return (
     <SC.ContainerCadastro>
@@ -106,7 +141,7 @@ export const Cadastro = () => {
           {errors.password && !password && <p>Digite sua senha!</p>}
           <div id="form"></div>
           <input type="submit" value="Cadastrar" />
-          <span>
+          <span translate="no">
             Já possui conta?{" "}
             <strong onClick={() => navigate("/")}>Faça seu login.</strong>
           </span>

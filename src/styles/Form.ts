@@ -89,7 +89,7 @@ export const FormArea = styled.div<FormAreaProps>`
     }
   }
 
-  @media screen and (min-width: 1280px) {
+  @media screen and (min-width: 768px) {
     & {
       min-width: ${(props) => (props.type = "Cadastro" ? "40vw" : "300px")};
       justify-content: ${(props) =>
@@ -137,7 +137,7 @@ export const ContainerCadastro = styled.div`
     z-index: -1;
   }
 
-  @media screen and (min-width: 1280px) {
+  @media screen and (min-width: 768px) {
     & {
       flex-direction: row;
       justify-content: space-between;

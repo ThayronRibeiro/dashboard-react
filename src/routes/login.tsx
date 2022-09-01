@@ -2,6 +2,10 @@ import { useState, useEffect } from "react";
 import * as SC from "../styles/Form";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import alertify from "alertifyjs";
+import "alertifyjs/build/alertify.min.js";
+import "alertifyjs/build/css/alertify.min.css";
+import { Users } from "./cadastro";
 
 type Props = {
   loginOk?: () => void;
@@ -66,7 +70,6 @@ export const Login = ({ loginOk }: Props) => {
         }, 2000);
       }
     }
-
     // if (account && account.password === data.password) {
     //   setauthenticated(true);
     //   localStorage.setItem("authenticated", "true");
@@ -79,13 +82,54 @@ export const Login = ({ loginOk }: Props) => {
     // }
   };
 
+  const handleChangePassword = () => {
+    alertify.set("notifier", "position", "top-right");
+    alertify
+      .prompt(
+        "Alteração de senha",
+        "Digite seu usuário",
+        "",
+        function (evt: any, value: any) {
+          const users = localStorage.getItem("usersDb");
+          if (users) {
+            const usersArray: Users[] = JSON.parse(users);
+            const account = usersArray.find((user) => user.userName === value);
+            if (account) {
+              //handleChangePasswordAfterSearch(value, account);
+            }
+          }
+          // alertify.error("Não existe o usuário " + value);
+        },
+        function () {
+          // alertify.error("Cancel");
+        }
+      )
+      .set("movable", true)
+      .set("labels", { ok: "Ok!", cancel: "Cancelar!" });
+  };
+
+  // const handleChangePasswordAfterSearch = (account: any) => {
+  //   alertify
+  //     .prompt(
+  //       "Alteração de senha",
+  //       "Digite sua nova senha",
+  //       "",
+  //       function (evt: any, value: any) {
+  //         account.password = value;
+  //         alertify.success("Senha alterada com sucesso!");
+  //       },
+  //       function () {}
+  //     )
+  //     .set("type", "password");
+  // };
+
   if (auth == "true") {
     return <Navigate replace to="/home" />;
   } else
     return (
       <SC.ContainerLogin>
         <SC.FormArea type="Login">
-          <h2>Login</h2>
+          <h2 translate="no">Login</h2>
           <form onSubmit={handleSubmit(onSubmit)}>
             <label>Usuário</label>
             <SC.InputField
@@ -111,7 +155,11 @@ export const Login = ({ loginOk }: Props) => {
 
             <div id="form"></div>
             <input type="submit" value="Entrar" onClick={loginOk} />
-            <span>
+            <span translate="no">
+              Esqueceu sua senha?{" "}
+              <strong onClick={handleChangePassword}>Altere aqui.</strong>
+            </span>
+            <span translate="no">
               Não possui conta?{" "}
               <strong onClick={() => navigate("/cadastro")}>Registre-se</strong>
             </span>
