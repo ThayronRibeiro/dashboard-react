@@ -6,14 +6,23 @@ import alertify from "alertifyjs";
 import "alertifyjs/build/alertify.min.js";
 import "alertifyjs/build/css/alertify.min.css";
 import { Users } from "./cadastro";
+import { Modal } from "../components/Modal";
 
 type Props = {
   loginOk?: () => void;
 };
 
 export const Login = ({ loginOk }: Props) => {
+  alertify.set("notifier", "position", "top-right");
+
   const [username, setusername] = useState("");
   const [password, setpassword] = useState("");
+  const [showModal, setShowModal] = useState(false);
+
+  const [usernameChange, setUsernameChange] = useState("");
+  const [passwordChange, setPasswordChange] = useState("");
+  const [passwordConfirmChange, setConfirmPasswordChange] = useState("");
+  const [stepChangePassword, setStepChangePassword] = useState(1);
   const users = [{ username: "admin", password: "123" }];
 
   useEffect(() => {
@@ -83,51 +92,139 @@ export const Login = ({ loginOk }: Props) => {
   };
 
   const handleChangePassword = () => {
-    alertify.set("notifier", "position", "top-right");
-    alertify
-      .prompt(
-        "Alteração de senha",
-        "Digite seu usuário",
-        "",
-        function (evt: any, value: any) {
-          const users = localStorage.getItem("usersDb");
-          if (users) {
-            const usersArray: Users[] = JSON.parse(users);
-            const account = usersArray.find((user) => user.userName === value);
-            if (account) {
-              //handleChangePasswordAfterSearch(value, account);
-            }
-          }
-          // alertify.error("Não existe o usuário " + value);
-        },
-        function () {
-          // alertify.error("Cancel");
-        }
-      )
-      .set("movable", true)
-      .set("labels", { ok: "Ok!", cancel: "Cancelar!" });
+    setShowModal(true);
+    // alertify.set("notifier", "position", "top-right");
+    // alertify
+    //   .prompt(
+    //     "Alteração de senha",
+    //     "Digite seu usuário",
+    //     "",
+    //     function (evt: any, value: any) {
+    //       const users = localStorage.getItem("usersDb");
+    //       if (users) {
+    //         const usersArray: Users[] = JSON.parse(users);
+    //         const account = usersArray.find((user) => user.userName === value);
+    //         if (account) {
+    //           //handleChangePasswordAfterSearch(value, account);
+    //         }
+    //       }
+    //       // alertify.error("Não existe o usuário " + value);
+    //     },
+    //     function () {
+    //       // alertify.error("Cancel");
+    //     }
+    //   )
+    //   .set("movable", true)
+    //   .set("labels", { ok: "Ok!", cancel: "Cancelar!" });
   };
 
-  // const handleChangePasswordAfterSearch = (account: any) => {
-  //   alertify
-  //     .prompt(
-  //       "Alteração de senha",
-  //       "Digite sua nova senha",
-  //       "",
-  //       function (evt: any, value: any) {
-  //         account.password = value;
-  //         alertify.success("Senha alterada com sucesso!");
-  //       },
-  //       function () {}
-  //     )
-  //     .set("type", "password");
-  // };
+  const handleSearchUser = (
+    username: string,
+    passwordChange?: string,
+    passwordConfirmChange?: string
+  ) => {
+    const users = localStorage.getItem("usersDb");
+    if (users) {
+      const usersArray = JSON.parse(users);
+      const account = usersArray.find(
+        (user: any) => user.userName === username
+      );
+      if (account) {
+        setStepChangePassword(2);
+
+        if (passwordChange && passwordConfirmChange) {
+          if (passwordChange != passwordConfirmChange) {
+            alertify.error("As senhas não coincidem!");
+          } else {
+            account.password = passwordChange;
+            localStorage.setItem("usersDb", JSON.stringify(usersArray));
+            setShowModal(false);
+            alertify.success("Senha alterada com sucesso!");
+          }
+        }
+      } else {
+        alertify.error("Esse usuário não existe!");
+        setStepChangePassword(1);
+        setUsernameChange("");
+      }
+    } else {
+      alertify.error("Não existe nenhuma conta cadastrada!");
+      setStepChangePassword(1);
+      setUsernameChange("");
+      setPasswordChange("");
+      setConfirmPasswordChange("");
+    }
+  };
+
+  const handleCloseModal = () => {
+    setStepChangePassword(1);
+    setShowModal(!showModal);
+    setUsernameChange("");
+    setPasswordChange("");
+    setConfirmPasswordChange("");
+  };
 
   if (auth == "true") {
     return <Navigate replace to="/home" />;
   } else
     return (
       <SC.ContainerLogin>
+        {showModal && (
+          <Modal onClose={handleCloseModal}>
+            <h2>Alteração de senha</h2>
+            {stepChangePassword == 1 && (
+              <>
+                <label>Digite seu usuário</label>
+                <SC.InputField
+                  placeholder="Ex.: admin"
+                  value={usernameChange}
+                  onChange={(e) =>
+                    setUsernameChange(e.target.value.toLowerCase())
+                  }
+                />
+
+                <div>
+                  <button onClick={() => handleSearchUser(usernameChange)}>
+                    Continuar
+                  </button>
+                  <button onClick={handleCloseModal}>Cancelar</button>
+                </div>
+              </>
+            )}
+            {stepChangePassword == 2 && (
+              <>
+                <label>Digite sua nova senha</label>
+                <SC.InputField
+                  type="password"
+                  placeholder=""
+                  value={passwordChange}
+                  onChange={(e) => setPasswordChange(e.target.value)}
+                />
+                <label>Digite a confirmação da nova senha</label>
+                <SC.InputField
+                  type="password"
+                  placeholder=""
+                  value={passwordConfirmChange}
+                  onChange={(e) => setConfirmPasswordChange(e.target.value)}
+                />
+                <div>
+                  <button
+                    onClick={() =>
+                      handleSearchUser(
+                        usernameChange,
+                        passwordChange,
+                        passwordConfirmChange
+                      )
+                    }
+                  >
+                    Continuar
+                  </button>
+                  <button onClick={handleCloseModal}>Cancelar</button>
+                </div>
+              </>
+            )}
+          </Modal>
+        )}
         <SC.FormArea type="Login">
           <h2 translate="no">Login</h2>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -156,12 +253,12 @@ export const Login = ({ loginOk }: Props) => {
             <div id="form"></div>
             <input type="submit" value="Entrar" onClick={loginOk} />
             <span translate="no">
-              Esqueceu sua senha?{" "}
-              <strong onClick={handleChangePassword}>Altere aqui.</strong>
-            </span>
-            <span translate="no">
               Não possui conta?{" "}
               <strong onClick={() => navigate("/cadastro")}>Registre-se</strong>
+            </span>
+            <span translate="no">
+              Esqueceu sua senha?{" "}
+              <strong onClick={handleChangePassword}>Altere aqui</strong>
             </span>
           </form>
         </SC.FormArea>
