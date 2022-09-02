@@ -127,3 +127,9 @@ export const MenuConfig = styled.div`
     color: #000;
   }
 `;
+
+export const MenuImgUser = styled.img`
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+`;

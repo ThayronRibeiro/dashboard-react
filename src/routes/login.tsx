@@ -55,6 +55,7 @@ export const Login = ({ loginOk }: Props) => {
         if (accountLogin && accountLogin.password === data.password) {
           setauthenticated(true);
           localStorage.setItem("authenticated", "true");
+          localStorage.setItem("userAuthId", accountLogin.id);
           navigate("/home");
         } else {
           let div = document.getElementById("form");

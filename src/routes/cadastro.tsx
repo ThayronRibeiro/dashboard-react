@@ -3,12 +3,16 @@ import * as SC from "../styles/Form";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import alertify from "alertifyjs";
+import { v4 as uuid } from "uuid";
+
 import "alertifyjs/build/alertify.min.js";
 import "alertifyjs/build/css/alertify.min.css";
 
 export type Users = {
+  id?: string;
   userName?: string;
   password?: string;
+  imgUser?: string;
 };
 
 export const Cadastro = () => {
@@ -44,15 +48,17 @@ export const Cadastro = () => {
       if (account) {
         alertify.error("Usuário já cadastrado!");
       } else {
-        if (password != confirmPassword) {
+        if (password !== confirmPassword) {
           let div = document.getElementById("form");
           if (div != null) {
             div.innerHTML = `<p>As senhas não coincidem!</p>`;
           }
         } else {
           usersArray.push({
+            id: uuid(),
             userName: username,
             password: password,
+            imgUser: "",
           });
 
           localStorage.setItem("usersDb", JSON.stringify(usersArray));
@@ -62,8 +68,10 @@ export const Cadastro = () => {
       }
     } else {
       usersDb.push({
+        id: uuid(),
         userName: username,
         password: password,
+        imgUser: "",
       });
       localStorage.setItem("usersDb", JSON.stringify(usersDb));
       console.log(localStorage.getItem("usersDb"));

@@ -6,18 +6,35 @@ import {
   FaHome,
   FaSignOutAlt,
 } from "react-icons/fa";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Users } from "../../routes/cadastro";
 
 export const Menu = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [menuConfigOpen, setMenuConfigOpen] = useState(false);
+  const usersDb = localStorage.getItem("usersDb");
+  const [usersAuthInfo, setUsersAuthInfo] = useState<Users>();
+
   const nav = useNavigate();
 
   const authRemove = () => {
     localStorage.setItem("authenticated", "false");
+    localStorage.setItem("imgData", "");
     nav("/");
   };
+
+  let photoUser = localStorage.getItem("imgData");
+
+  useEffect(() => {
+    if (usersDb) {
+      const usersArray = JSON.parse(usersDb);
+      const account = usersArray.find(
+        (user: any) => user.id === localStorage.getItem("userAuthId")
+      );
+      setUsersAuthInfo(account);
+    }
+  }, [usersAuthInfo]);
 
   return (
     <>
@@ -28,7 +45,10 @@ export const Menu = () => {
           </h2>
           {!menuConfigOpen && (
             <h2 onClick={() => setMenuConfigOpen(!menuConfigOpen)}>
-              <FaUserCircle />
+              {!usersAuthInfo?.imgUser && <FaUserCircle />}
+              {usersAuthInfo?.imgUser && (
+                <SC.MenuImgUser alt="" src={usersAuthInfo?.imgUser} />
+              )}
             </h2>
           )}
         </div>
@@ -41,7 +61,8 @@ export const Menu = () => {
           //onClickCapture={() => setMenuConfigOpen(!menuConfigOpen)}
         >
           <h2 onClick={() => setMenuConfigOpen(!menuConfigOpen)}>
-            <FaUserCircle />
+            {!photoUser && <FaUserCircle />}
+            {photoUser && <SC.MenuImgUser alt="" src={photoUser} />}
           </h2>
           <SC.MenuConfig>
             <span>

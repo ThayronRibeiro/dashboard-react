@@ -5,6 +5,7 @@ import { Home } from "./home";
 import { Teste } from "./teste";
 import { ErrorPage } from "./error";
 import { Cadastro } from "./cadastro";
+import { Configuracoes } from "./configuracoes";
 
 const Private = ({ Item }: any) => {
   let signed = localStorage.getItem("authenticated");
@@ -19,6 +20,10 @@ export const RoutesApp = () => {
         <Routes>
           <Route path="/home" element={<Private Item={<Home />} />} />
           <Route path="/teste" element={<Private Item={<Teste />} />} />
+          <Route
+            path="/configuracoes"
+            element={<Private Item={<Configuracoes />} />}
+          />
           <Route path="/cadastro" element={<Cadastro />} />
           <Route path="/" element={<Login />} />
           <Route path="*" element={<ErrorPage />} />
