@@ -61,8 +61,10 @@ export const Menu = () => {
           //onClickCapture={() => setMenuConfigOpen(!menuConfigOpen)}
         >
           <h2 onClick={() => setMenuConfigOpen(!menuConfigOpen)}>
-            {!photoUser && <FaUserCircle />}
-            {photoUser && <SC.MenuImgUser alt="" src={photoUser} />}
+            {!usersAuthInfo?.imgUser && <FaUserCircle />}
+            {usersAuthInfo?.imgUser && (
+              <SC.MenuImgUser alt="" src={usersAuthInfo?.imgUser} />
+            )}
           </h2>
           <SC.MenuConfig>
             <span>

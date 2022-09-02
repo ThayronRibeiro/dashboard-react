@@ -1,7 +1,13 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { InputFiles } from "typescript";
 import { Menu } from "../components/Menu";
-import { ConfigContainer, ImgUser, ImgUserArea } from "../styles/ConfigPage";
+import {
+  ConfigContainer,
+  ImgUser,
+  ImgUserArea,
+  FieldConfig,
+  InputField,
+} from "../styles/ConfigPage";
 import * as SC from "../styles/ContainerContent";
 
 import userBlank from "../assets/images/user.png";
@@ -124,6 +130,32 @@ export const Configuracoes = () => {
               style={{ visibility: "hidden" }}
             ></input>
           </ImgUserArea>
+
+          <FieldConfig htmlFor="userName">Usuário</FieldConfig>
+          <InputField
+            id="userName"
+            placeholder=""
+            value={usersAuthInfo?.userName}
+            disabled
+          />
+
+          <FieldConfig htmlFor="userName">Nome</FieldConfig>
+          <InputField
+            id="userName"
+            placeholder=""
+            value={usersAuthInfo?.userName}
+          />
+
+          <FieldConfig htmlFor="userName">Senha</FieldConfig>
+          <InputField
+            id="userName"
+            placeholder=""
+            value={usersAuthInfo?.password}
+          />
+
+          <form>
+            <label></label>
+          </form>
         </ConfigContainer>
       </SC.ContainerContent>
     </>
