@@ -121,7 +121,6 @@ export const Configuracoes = () => {
               type="file"
               accept="image/*"
               onChange={mudarFoto}
-              capture
               style={{ visibility: "hidden" }}
             ></input>
           </ImgUserArea>
