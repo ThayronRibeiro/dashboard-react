@@ -7,17 +7,27 @@ import {
   ImgUserArea,
   FieldConfig,
   InputField,
+  TitleConfigToogle,
+  ContentToogle,
 } from "../styles/ConfigPage";
+
 import * as SC from "../styles/ContainerContent";
 
 import userBlank from "../assets/images/user.png";
 import { Users } from "./cadastro";
 
+import { FaArrowDown, FaCaretDown, FaCaretUp } from "react-icons/fa";
+
 export const Configuracoes = () => {
+  document.title = "Configurações | Dashboard ReactJs";
+
   let base64code = "";
   const [file, setFile] = useState<any>();
   const [fileDataURL, setFileDataURL] = useState();
   const [usersAuthInfo, setUsersAuthInfo] = useState<Users>();
+
+  const [contentCadastro, setContentCadastro] = useState(true);
+  const [contentApp, setContentApp] = useState(true);
 
   const usersDb = localStorage.getItem("usersDb");
 
@@ -28,8 +38,6 @@ export const Configuracoes = () => {
       const photo = input[0];
 
       setFile(photo);
-      //console.log(fileDataURL);
-
       let imgData = getBase64(photo);
     }
   };
@@ -56,7 +64,6 @@ export const Configuracoes = () => {
   }, [usersDb, file, usersAuthInfo]);
 
   const onLoad = (fileString: any) => {
-    //console.log(fileString);
     base64code = fileString;
     localStorage.setItem("imgData", fileString);
     if (usersDb) {
@@ -82,18 +89,6 @@ export const Configuracoes = () => {
       setUsersAuthInfo(account);
     }
   }, [usersAuthInfo]);
-  // useEffect(() => {
-  //   if (usersDb) {
-  //     const usersArray = JSON.parse(usersDb);
-  //     const account = usersArray.find(
-  //       (user: any) => user.id === localStorage.getItem("userAuthId")
-  //     );
-  //     account.imgUser = localStorage.getItem("imgData");
-  //     setUsersAuthInfo(account);
-  //     localStorage.setItem("usersDb", JSON.stringify(usersArray));
-  //     // console.log(account);
-  //   }
-  // }, [usersAuthInfo]);
 
   const getBase64 = (file: any): any => {
     let reader = new FileReader();
@@ -103,7 +98,25 @@ export const Configuracoes = () => {
     };
   };
 
-  console.log(usersAuthInfo?.imgUser);
+  const handleDelPhoto = (photo: string | undefined) => {
+    console.log(`Atual: ${photo}`);
+    if (photo) {
+      // photo = "";
+      console.log(`Novo: ${photo}`);
+
+      const users = localStorage.getItem("usersDb");
+      if (users) {
+        const usersArray = JSON.parse(users);
+        const account: Users = usersArray.find(
+          (user: any) => user.id === localStorage.getItem("userAuthId")
+        );
+        console.log(`Teste: ${account.userName}`);
+        account.imgUser = "";
+
+        localStorage.setItem("usersDb", JSON.stringify(usersArray));
+      }
+    }
+  };
 
   return (
     <>
@@ -112,11 +125,7 @@ export const Configuracoes = () => {
         <h2>Configurações</h2>
         <ConfigContainer>
           <ImgUserArea id="photoUserArea">
-            <ImgUser
-              alt=""
-              src={usersAuthInfo?.imgUser ? usersAuthInfo?.imgUser : userBlank}
-              id="photo"
-            />
+            <ImgUser url={usersAuthInfo?.imgUser} id="photo" />
             <label htmlFor="photoUser" style={{ cursor: "pointer" }}>
               <div>
                 <span>Mudar foto</span>
@@ -129,29 +138,71 @@ export const Configuracoes = () => {
               onChange={mudarFoto}
               style={{ visibility: "hidden" }}
             ></input>
+            <span
+              style={{ color: "red", cursor: "pointer", marginTop: "-20px" }}
+              onClick={() => handleDelPhoto(usersAuthInfo?.imgUser)}
+            >
+              Excluir foto
+            </span>
           </ImgUserArea>
 
-          <FieldConfig htmlFor="userName">Usuário</FieldConfig>
-          <InputField
-            id="userName"
-            placeholder=""
-            value={usersAuthInfo?.userName}
-            disabled
-          />
+          <TitleConfigToogle
+            onClick={() => setContentCadastro(!contentCadastro)}
+          >
+            <h3>Configurações de Cadastro</h3>
+            {contentCadastro ? <FaCaretUp /> : <FaCaretDown />}
+          </TitleConfigToogle>
+          <ContentToogle visibleToogle={contentCadastro}>
+            <FieldConfig htmlFor="userName">Usuário</FieldConfig>
+            <InputField
+              id="userName"
+              placeholder=""
+              value={usersAuthInfo?.userName}
+              disabled
+            />
 
-          <FieldConfig htmlFor="userName">Nome</FieldConfig>
-          <InputField
-            id="userName"
-            placeholder=""
-            value={usersAuthInfo?.userName}
-          />
+            <FieldConfig htmlFor="userName">Nome</FieldConfig>
+            <InputField
+              id="userName"
+              placeholder=""
+              value={usersAuthInfo?.userName}
+            />
 
-          <FieldConfig htmlFor="userName">Senha</FieldConfig>
-          <InputField
-            id="userName"
-            placeholder=""
-            value={usersAuthInfo?.password}
-          />
+            <FieldConfig htmlFor="userName">Senha</FieldConfig>
+            <InputField
+              id="userName"
+              placeholder=""
+              value={usersAuthInfo?.password}
+            />
+          </ContentToogle>
+
+          <TitleConfigToogle onClick={() => setContentApp(!contentApp)}>
+            <h3>Configurações da Aplicação</h3>
+            {contentApp ? <FaCaretUp /> : <FaCaretDown />}
+          </TitleConfigToogle>
+          <ContentToogle visibleToogle={contentApp}>
+            <FieldConfig htmlFor="userName">Usuário</FieldConfig>
+            <InputField
+              id="userName"
+              placeholder=""
+              value={usersAuthInfo?.userName}
+              disabled
+            />
+
+            <FieldConfig htmlFor="userName">Nome</FieldConfig>
+            <InputField
+              id="userName"
+              placeholder=""
+              value={usersAuthInfo?.userName}
+            />
+
+            <FieldConfig htmlFor="userName">Senha</FieldConfig>
+            <InputField
+              id="userName"
+              placeholder=""
+              value={usersAuthInfo?.password}
+            />
+          </ContentToogle>
         </ConfigContainer>
       </SC.ContainerContent>
     </>

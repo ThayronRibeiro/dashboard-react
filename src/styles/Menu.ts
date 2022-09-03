@@ -7,6 +7,10 @@ export const Menu = styled.div`
   display: flex;
   align-items: center;
   z-index: 998;
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
 
   div {
     display: flex;
@@ -20,6 +24,14 @@ export const Menu = styled.div`
 
     h2 {
       cursor: pointer;
+    }
+
+    h2:nth-child(2) {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: #fff 3px solid;
+      border-radius: 50%;
     }
 
     a {
@@ -84,13 +96,19 @@ export const MenuConfigContainer = styled.div`
   height: 100vh;
   width: 100vw;
   padding-left: 50vw; //posicionar na tela
+  z-index: 999;
 
   h2 {
     position: absolute;
-    top: 10px;
+    top: 11px;
     right: 25px;
     color: var(--white);
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: #fff 3px solid;
+    border-radius: 50%;
   }
 
   @media screen and (min-width: 768px) {
