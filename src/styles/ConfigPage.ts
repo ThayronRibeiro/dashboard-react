@@ -22,7 +22,7 @@ export const ImgUser = styled.img`
 `;
 
 export const FieldConfig = styled.label`
-  color: black;
+  color: #000;
   font-weight: bold;
 `;
 

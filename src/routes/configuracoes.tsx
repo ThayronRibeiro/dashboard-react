@@ -152,10 +152,6 @@ export const Configuracoes = () => {
             placeholder=""
             value={usersAuthInfo?.password}
           />
-
-          <form>
-            <label></label>
-          </form>
         </ConfigContainer>
       </SC.ContainerContent>
     </>
