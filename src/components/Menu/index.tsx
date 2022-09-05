@@ -92,8 +92,8 @@ export const Menu = () => {
               </Link>
             </li>
             <li>
-              <Link to="/teste" onClick={() => setMenuOpen(!menuOpen)}>
-                Teste
+              <Link to="/clientes" onClick={() => setMenuOpen(!menuOpen)}>
+                Clientes
               </Link>
             </li>
             <li>

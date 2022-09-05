@@ -41,13 +41,14 @@ export const Menu = styled.div`
 `;
 
 export const MenuOpen = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
+  bottom: 0;
   background-color: rgba(0, 0, 0, 1);
-  height: 100vh;
+
   width: 70vw;
-  z-index: 999;
+  z-index: 1000;
   color: var(--white);
   padding: 15px;
 
