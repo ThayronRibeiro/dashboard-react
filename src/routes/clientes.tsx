@@ -10,7 +10,7 @@ export type ClientesType = {
 };
 
 export const Clientes = () => {
-  document.title;
+  document.title = "Clientes | Dashboard ReactJs";
   const [clientesList, setClientesList] = useState<ClientesType[]>([
     { id: "1", name: "Teste", email: "teste@teste.com" },
     { id: "2", name: "Teste2", email: "teste2@teste.com" },
