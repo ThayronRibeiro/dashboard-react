@@ -1,7 +1,8 @@
 import { ClientesType } from "../../routes/clientes";
 import * as SC from "../../styles/Table";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FaTrash, FaPlus } from "react-icons/fa";
+import alertify from "alertifyjs";
 
 type ListaProps = {
   arrayContent: ClientesType[];

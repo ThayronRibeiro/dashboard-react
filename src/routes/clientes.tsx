@@ -16,6 +16,8 @@ export const Clientes = () => {
     { id: "2", name: "Teste2", email: "teste2@teste.com" },
   ]);
 
+  localStorage.setItem("clientesDb", JSON.stringify(clientesList));
+
   console.log(clientesList);
 
   return (
