@@ -48,7 +48,7 @@ export const ClientesInfo = () => {
           </SC.ButtonGroup>
           <SC.ClienteTitle>
             <h2>
-              {cliente?.id} - {cliente?.name}
+              {cliente?.key} - {cliente?.name}
             </h2>
           </SC.ClienteTitle>
           <SC.ClienteContent>

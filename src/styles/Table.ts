@@ -22,9 +22,7 @@ export const TableHeaderItem = styled.th`
   padding: 0 15px;
 `;
 
-export const TableBody = styled.tbody`
-  //   padding: 5px 15px;
-`;
+export const TableBody = styled.tbody``;
 
 export const TableContent = styled.tr`
   padding: 5px 15px;
@@ -34,7 +32,11 @@ export const TableContent = styled.tr`
   cursor: pointer;
 `;
 
-export const TableRowItem = styled.td`
+type RowItemprops = {
+  center?: boolean;
+};
+export const TableRowItem = styled.td<RowItemprops>`
+  text-align: ${(props) => (props.center ? "center" : "left")};
   padding: 5px 15px;
 `;
 

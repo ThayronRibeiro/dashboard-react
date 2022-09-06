@@ -1,24 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Lista } from "../components/Lista";
 import { Menu } from "../components/Menu";
 import { ContainerContent } from "../styles/ContainerContent";
 
 export type ClientesType = {
+  key?: string;
   id?: string;
   name?: string;
   email?: string;
+  userId?: string;
+  selected?: boolean;
 };
 
 export const Clientes = () => {
   document.title = "Clientes | Dashboard ReactJs";
-  const [clientesList, setClientesList] = useState<ClientesType[]>([
-    { id: "1", name: "Teste", email: "teste@teste.com" },
-    { id: "2", name: "Teste2", email: "teste2@teste.com" },
-  ]);
 
-  localStorage.setItem("clientesDb", JSON.stringify(clientesList));
+  const [clientesList, setClientesList] = useState<ClientesType[]>([]);
 
-  console.log(clientesList);
+  // localStorage.setItem("clientesDb", JSON.stringify(clientesList));
+
+  useEffect(() => {
+    const clientesDb = localStorage.getItem("clientesDb");
+    if (clientesDb) {
+      const parseClientes = JSON.parse(clientesDb);
+      setClientesList(parseClientes);
+    }
+  }, [clientesList]);
 
   return (
     <>

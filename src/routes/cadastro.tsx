@@ -38,22 +38,6 @@ export const Cadastro = () => {
     formState: { errors },
   } = useForm();
 
-  const listener = (event: any) => {
-    if (
-      event.code === "Enter" ||
-      event.code === "NumpadEnter" ||
-      event.keyCode === 13
-    ) {
-      let input: HTMLInputElement | null =
-        document.querySelector("#inputCadastro");
-      setTimeout(() => {
-        if (input) {
-          input.click();
-        }
-      }, 100);
-    }
-  };
-
   const onSubmit = (data: any) => {
     const users = localStorage.getItem("usersDb");
     if (users) {
@@ -97,11 +81,26 @@ export const Cadastro = () => {
   };
 
   useEffect(() => {
+    const listener = (event: any) => {
+      if (
+        event.code === "Enter" ||
+        event.code === "NumpadEnter" ||
+        event.keyCode === 13
+      ) {
+        let input: HTMLInputElement | null =
+          document.querySelector("#inputCadastro");
+        setTimeout(() => {
+          if (input) {
+            input.click();
+          }
+        }, 100);
+      }
+    };
     document.addEventListener("keydown", listener);
     return () => {
       document.removeEventListener("keydown", listener);
     };
-  }, [username, password, onSubmit, handleSubmit]);
+  }, [username, password, confirmPassword, onSubmit, handleSubmit]);
 
   return (
     <SC.ContainerCadastro>

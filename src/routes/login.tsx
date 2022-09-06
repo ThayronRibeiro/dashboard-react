@@ -9,6 +9,7 @@ import { Users } from "./cadastro";
 import { Modal } from "../components/Modal";
 import { info } from "console";
 import { click } from "@testing-library/user-event/dist/click";
+import { JsxElement } from "typescript";
 
 type Props = {
   loginOk?: () => void;
@@ -84,33 +85,6 @@ export const Login = ({ loginOk }: Props) => {
     }
   };
 
-  const listener = (event: any) => {
-    if (
-      event.code === "Enter" ||
-      event.code === "NumpadEnter" ||
-      event.keyCode === 13
-    ) {
-      let input: HTMLInputElement | null =
-        document.querySelector("#inputLogin");
-      setTimeout(() => {
-        if (input) {
-          input.click();
-        }
-      }, 100);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("keydown", listener);
-    return () => {
-      document.removeEventListener("keydown", listener);
-    };
-  }, [username, password, onSubmit, handleSubmit]);
-
-  const handleChangePassword = () => {
-    setShowModal(true);
-  };
-
   const handleSearchUser = (
     username: string,
     passwordChange?: string,
@@ -159,6 +133,37 @@ export const Login = ({ loginOk }: Props) => {
     setUsernameChange("");
     setPasswordChange("");
     setConfirmPasswordChange("");
+  };
+
+  useEffect(() => {
+    const listener = (event: any) => {
+      if (
+        event.code === "Enter" ||
+        event.code === "NumpadEnter" ||
+        event.keyCode === 13
+      ) {
+        const buttonLogin = document.getElementById("inputLogin");
+        const el: any = buttonLogin;
+        //el.click();
+        handleSubmit(onSubmit)();
+      }
+    };
+    const form = document.getElementById("loginForm");
+    if (form) {
+      form.addEventListener("keydown", listener);
+      console.log("teste ok!");
+    }
+    document.addEventListener("keydown", listener);
+    return () => {
+      document.removeEventListener("keydown", listener);
+      if (form) {
+        form.removeEventListener("keydown", listener);
+      }
+    };
+  }, [username, password, onSubmit, handleSubmit]);
+
+  const handleChangePassword = () => {
+    setShowModal(true);
   };
 
   if (auth == "true") {
@@ -224,7 +229,7 @@ export const Login = ({ loginOk }: Props) => {
         )}
         <SC.FormArea type="Login">
           <h2 translate="no">Login</h2>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)} id="loginForm">
             <label>Usuário</label>
             <SC.InputField
               id="userName"
@@ -238,6 +243,7 @@ export const Login = ({ loginOk }: Props) => {
             {errors.userName && !username && <p>Digite seu usuário!</p>}
             <label>Senha</label>
             <SC.InputField
+              id="password"
               type="password"
               placeholder="Digite sua senha"
               value={password}
