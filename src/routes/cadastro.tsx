@@ -38,6 +38,22 @@ export const Cadastro = () => {
     formState: { errors },
   } = useForm();
 
+  const listener = (event: any) => {
+    if (
+      event.code === "Enter" ||
+      event.code === "NumpadEnter" ||
+      event.keyCode === 13
+    ) {
+      let input: HTMLInputElement | null =
+        document.querySelector("#inputCadastro");
+      setTimeout(() => {
+        if (input) {
+          input.click();
+        }
+      }, 100);
+    }
+  };
+
   const onSubmit = (data: any) => {
     const users = localStorage.getItem("usersDb");
     if (users) {
@@ -78,38 +94,15 @@ export const Cadastro = () => {
       alertify.success("Usuário cadastrado com sucesso!");
       navigate("/");
     }
-    // const account = usersDb.find((user) => user.userName === data.userName);
-
-    // if (password != confirmPassword) {
-    //   let div = document.getElementById("form");
-    //   if (div != null) {
-    //     div.innerHTML = `<p>As senhas não coincidem!</p>`;
-    //   }
-    // } else {
-    //   const users = localStorage.getItem("usersDb");
-    //   if (users) {
-    //     const usersArray: Users[] = JSON.parse(users);
-
-    //     usersArray.push({
-    //       userName: username,
-    //       password: password,
-    //     });
-
-    //     localStorage.setItem("usersDb", JSON.stringify(usersArray));
-    //     alertify.success("Usuário cadastrado com sucesso!");
-    //     navigate("/");
-    //   } else {
-    //     usersDb.push({
-    //       userName: username,
-    //       password: password,
-    //     });
-    //     localStorage.setItem("usersDb", JSON.stringify(usersDb));
-    //     console.log(localStorage.getItem("usersDb"));
-    //     alertify.success("Usuário cadastrado com sucesso!");
-    //     navigate("/");
-    //   }
-    // }
   };
+
+  useEffect(() => {
+    document.addEventListener("keydown", listener);
+    return () => {
+      document.removeEventListener("keydown", listener);
+    };
+  }, [username, password, onSubmit, handleSubmit]);
+
   return (
     <SC.ContainerCadastro>
       <div className="cadastroAside"></div>
@@ -148,7 +141,7 @@ export const Cadastro = () => {
           />
           {errors.password && !password && <p>Digite sua senha!</p>}
           <div id="form"></div>
-          <input type="submit" value="Cadastrar" />
+          <input type="submit" value="Cadastrar" id="inputCadastro" />
           <span translate="no">
             Já possui conta?{" "}
             <strong onClick={() => navigate("/")}>Faça seu login.</strong>

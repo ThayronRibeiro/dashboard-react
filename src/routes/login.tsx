@@ -7,6 +7,8 @@ import "alertifyjs/build/alertify.min.js";
 import "alertifyjs/build/css/alertify.min.css";
 import { Users } from "./cadastro";
 import { Modal } from "../components/Modal";
+import { info } from "console";
+import { click } from "@testing-library/user-event/dist/click";
 
 type Props = {
   loginOk?: () => void;
@@ -80,43 +82,33 @@ export const Login = ({ loginOk }: Props) => {
         }, 2000);
       }
     }
-    // if (account && account.password === data.password) {
-    //   setauthenticated(true);
-    //   localStorage.setItem("authenticated", "true");
-    //   navigate("/home");
-    // } else {
-    //   let div = document.getElementById("form");
-    //   if (div != null) {
-    //     div.innerHTML = `<p>Usuário ou senha incorretos!</p>`;
-    //   }
-    // }
   };
+
+  const listener = (event: any) => {
+    if (
+      event.code === "Enter" ||
+      event.code === "NumpadEnter" ||
+      event.keyCode === 13
+    ) {
+      let input: HTMLInputElement | null =
+        document.querySelector("#inputLogin");
+      setTimeout(() => {
+        if (input) {
+          input.click();
+        }
+      }, 100);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("keydown", listener);
+    return () => {
+      document.removeEventListener("keydown", listener);
+    };
+  }, [username, password, onSubmit, handleSubmit]);
 
   const handleChangePassword = () => {
     setShowModal(true);
-    // alertify.set("notifier", "position", "top-right");
-    // alertify
-    //   .prompt(
-    //     "Alteração de senha",
-    //     "Digite seu usuário",
-    //     "",
-    //     function (evt: any, value: any) {
-    //       const users = localStorage.getItem("usersDb");
-    //       if (users) {
-    //         const usersArray: Users[] = JSON.parse(users);
-    //         const account = usersArray.find((user) => user.userName === value);
-    //         if (account) {
-    //           //handleChangePasswordAfterSearch(value, account);
-    //         }
-    //       }
-    //       // alertify.error("Não existe o usuário " + value);
-    //     },
-    //     function () {
-    //       // alertify.error("Cancel");
-    //     }
-    //   )
-    //   .set("movable", true)
-    //   .set("labels", { ok: "Ok!", cancel: "Cancelar!" });
   };
 
   const handleSearchUser = (
@@ -256,7 +248,7 @@ export const Login = ({ loginOk }: Props) => {
             {errors.password && !password && <p>Digite sua senha!</p>}
 
             <div id="form"></div>
-            <input type="submit" value="Entrar" onClick={loginOk} />
+            <input type="submit" value="Entrar" id="inputLogin" />
             <span translate="no">
               Não possui conta?{" "}
               <strong onClick={() => navigate("/cadastro")}>Registre-se</strong>
