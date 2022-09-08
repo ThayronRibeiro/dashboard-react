@@ -35,17 +35,17 @@ export const ClientesInfo = () => {
           style={{ cursor: "pointer" }}
         >{`< Voltar`}</h3>
 
+        <SC.ButtonGroup>
+          <button>
+            <FaSave />
+            Salvar
+          </button>
+          <button>
+            <FaTrash />
+            Excluir
+          </button>
+        </SC.ButtonGroup>
         <SC.ClienteContainer>
-          <SC.ButtonGroup>
-            <button>
-              <FaSave />
-              Salvar
-            </button>
-            <button>
-              <FaTrash />
-              Excluir
-            </button>
-          </SC.ButtonGroup>
           <SC.ClienteTitle>
             <h2>
               {cliente?.key} - {cliente?.name}

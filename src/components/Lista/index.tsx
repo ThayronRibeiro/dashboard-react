@@ -29,7 +29,7 @@ export const Lista = ({ arrayContent, handleDel }: ListaProps) => {
     }
   }, [clientesList, clientesDb]);
 
-  const handleCheckDel = (id: string) => {
+  function handleCheckDel(id: string) {
     const parseClientes = JSON.parse(clientesDb!);
     const clienteChecked = parseClientes.find(
       (cliente: ClientesType) => cliente.id === id
@@ -38,26 +38,26 @@ export const Lista = ({ arrayContent, handleDel }: ListaProps) => {
       clienteChecked.selected = !clienteChecked.selected;
       localStorage.setItem("clientesDb", JSON.stringify(parseClientes));
     }
-  };
+  }
 
   return (
     <>
+      <SC.ButtonsArea>
+        <button onClick={handleAdd}>
+          <FaPlus />
+          Adicionar
+        </button>
+        <button onClick={handleDel}>
+          <FaTrash /> Deletar
+        </button>
+      </SC.ButtonsArea>
       <SC.ContainerList>
-        <SC.ButtonsArea>
-          <button onClick={handleAdd}>
-            <FaPlus />
-            Adicionar
-          </button>
-          <button onClick={handleDel}>
-            <FaTrash /> Deletar
-          </button>
-        </SC.ButtonsArea>
         <SC.Table>
           <SC.TableHeader>
             <tr>
-              <SC.TableHeaderItem></SC.TableHeaderItem>
-              <SC.TableHeaderItem>ID</SC.TableHeaderItem>
-              <SC.TableHeaderItem>Nome</SC.TableHeaderItem>
+              <SC.TableHeaderItem width={5}></SC.TableHeaderItem>
+              <SC.TableHeaderItem width={15}>ID</SC.TableHeaderItem>
+              <SC.TableHeaderItem width={700}>Nome</SC.TableHeaderItem>
               <SC.TableHeaderItem>Email</SC.TableHeaderItem>
             </tr>
           </SC.TableHeader>

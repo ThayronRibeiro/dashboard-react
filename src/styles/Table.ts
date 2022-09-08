@@ -2,11 +2,19 @@ import styled from "styled-components";
 
 export const ContainerList = styled.div`
   position: relative;
+  overflow-x: auto;
 `;
 
 export const Table = styled.table`
-  width: 100%;
   margin-top: 15px;
+  width: 100%;
+  margin: 25px 0;
+
+  /* @media screen and (min-width: 768px) {
+    & {
+      max-width: 100%;
+    }
+  } */
 `;
 
 export const TableHeader = styled.thead`
@@ -18,8 +26,12 @@ export const TableHeader = styled.thead`
   text-align: left;
 `;
 
-export const TableHeaderItem = styled.th`
+type TableHeaderItemProps = {
+  width?: number;
+};
+export const TableHeaderItem = styled.th<TableHeaderItemProps>`
   padding: 0 15px;
+  width: ${(props) => `${props.width}px`};
 `;
 
 export const TableBody = styled.tbody``;
@@ -41,12 +53,18 @@ export const TableRowItem = styled.td<RowItemprops>`
 `;
 
 export const ButtonsArea = styled.div`
-  position: absolute;
+  /* position: absolute;
   top: 0;
   right: 0;
   display: flex;
   gap: 15px;
-  margin-top: -45px;
+  z-index: 999;
+  margin-top: -55px; */
+  display: flex;
+  width: 100%;
+  gap: 15px;
+  align-items: center;
+  justify-content: flex-end;
 
   button {
     display: flex;

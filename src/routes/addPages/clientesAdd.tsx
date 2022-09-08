@@ -7,6 +7,7 @@ import { v4 as uuid } from "uuid";
 import { useNavigate } from "react-router-dom";
 import alertify from "alertifyjs";
 import { ClientesType } from "../clientes";
+import { AddContainer } from "../../styles/ClientePage";
 
 export const ClientesAdd = () => {
   const [name, setName] = useState("");
@@ -61,45 +62,52 @@ export const ClientesAdd = () => {
     nav("/clientes/");
   };
 
+  const backCliente = () => {
+    nav("/clientes/");
+  };
+
   return (
     <>
       <Menu />
       <ContainerContent>
-        <h2>Adicionar cliente</h2>
+        <AddContainer>
+          <h2>Adicionar cliente</h2>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <label htmlFor="name">Nome</label>
-          <InputField
-            type="text"
-            placeholder="Informe o nome do cliente"
-            id="name"
-            value={name}
-            {...register("name", { required: true })}
-            onChange={(e) => setName(e.target.value)}
-            errors={errors.name}
-          />
-          <label htmlFor="email">Email</label>
-          <InputField
-            type="email"
-            placeholder="Informe o email do cliente"
-            id="email"
-            value={email}
-            {...register("email", { required: true })}
-            onChange={(e) => setEmail(e.target.value)}
-            errors={errors.email}
-          />
-          <label htmlFor="confirmEmail">Confirmação de Email</label>
-          <InputField
-            type="email"
-            placeholder="Informe o email do cliente novamente"
-            id="confirmEmail"
-            value={confirmEmail}
-            {...register("confirmEmail", { required: true })}
-            onChange={(e) => setConfirmEmail(e.target.value)}
-            errors={errors.confirmEmail}
-          />
-          <input value="Salvar" type="submit" />
-        </form>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <label htmlFor="name">Nome</label>
+            <InputField
+              type="text"
+              placeholder="Informe o nome do cliente"
+              id="name"
+              value={name}
+              {...register("name", { required: true })}
+              onChange={(e) => setName(e.target.value)}
+              errors={errors.name}
+            />
+            <label htmlFor="email">Email</label>
+            <InputField
+              type="email"
+              placeholder="Informe o email do cliente"
+              id="email"
+              value={email}
+              {...register("email", { required: true })}
+              onChange={(e) => setEmail(e.target.value)}
+              errors={errors.email}
+            />
+            <label htmlFor="confirmEmail">Confirmação de Email</label>
+            <InputField
+              type="email"
+              placeholder="Informe o email do cliente novamente"
+              id="confirmEmail"
+              value={confirmEmail}
+              {...register("confirmEmail", { required: true })}
+              onChange={(e) => setConfirmEmail(e.target.value)}
+              errors={errors.confirmEmail}
+            />
+            <input value="Salvar" type="submit" />
+            <button onClick={backCliente}>Voltar</button>
+          </form>
+        </AddContainer>
       </ContainerContent>
     </>
   );

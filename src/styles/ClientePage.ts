@@ -9,12 +9,11 @@ export const ClienteContainer = styled.div`
 `;
 
 export const ButtonGroup = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin-top: -45px;
   display: flex;
+  width: 100%;
   gap: 15px;
+  align-items: center;
+  justify-content: flex-end;
 
   button {
     cursor: pointer;
@@ -53,4 +52,40 @@ export const ClienteContent = styled.div`
   flex-direction: column;
   background-color: #f1f1f1;
   padding: 10px 20px;
+`;
+
+export const AddContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  h2 {
+    margin-bottom: 25px;
+  }
+
+  input[type="submit"] {
+    background-color: var(--babyBlue);
+    height: 35px;
+    width: 90px;
+    border: none;
+    color: var(--white);
+    cursor: pointer;
+    margin: 15px 0;
+
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+
+  button {
+    height: 35px;
+    width: 90px;
+    margin-left: 15px;
+    background-color: #c1c1c1;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.6;
+    }
+  }
 `;
