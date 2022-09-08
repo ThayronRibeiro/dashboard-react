@@ -20,6 +20,7 @@ export const Clientes = () => {
 
   // localStorage.setItem("clientesDb", JSON.stringify(clientesList));
   const clientesDb = localStorage.getItem("clientesDb");
+
   useEffect(() => {
     if (clientesDb) {
       const parseClientes = JSON.parse(clientesDb);
@@ -30,18 +31,17 @@ export const Clientes = () => {
   const handleDel = () => {
     if (clientesDb) {
       const parseClientes = JSON.parse(clientesDb!);
-      const clientesSaved = parseClientes.find(
+      const clientesSaved = parseClientes.filter(
         (cliente: ClientesType) => cliente.selected !== true
       );
       if (clientesSaved) {
-        console.log(clientesSaved);
         setClientesList(clientesSaved);
         localStorage.setItem("clientesDb", JSON.stringify(clientesSaved));
+        console.log(clientesSaved);
       }
     } else {
       alertify.error("Não há clientes cadastrados para serem excluídos!");
     }
-    // localStorage.setItem("clientesDb", JSON.stringify(clientesSaved));
   };
 
   return (

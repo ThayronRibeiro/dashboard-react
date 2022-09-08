@@ -21,6 +21,7 @@ export const Lista = ({ arrayContent, handleDel }: ListaProps) => {
   const [clientesList, setClientesList] = useState<ClientesType[]>([]);
 
   const clientesDb = localStorage.getItem("clientesDb");
+
   useEffect(() => {
     if (clientesDb) {
       const parseClientes = JSON.parse(clientesDb);

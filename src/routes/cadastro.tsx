@@ -23,10 +23,7 @@ export const Cadastro = () => {
   const [usersDb, setUsersDb] = useState<Users[]>([]);
 
   alertify.set("notifier", "position", "top-right");
-
-  useEffect(() => {
-    document.title = "Cadastro | Dashboard ReactJs";
-  }, []);
+  document.title = "Cadastro | Dashboard ReactJs";
 
   const navigate = useNavigate();
   const [authenticated, setauthenticated] = useState(false);
