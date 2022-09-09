@@ -16,6 +16,8 @@ export type ClientesType = {
 export const Clientes = () => {
   document.title = "Clientes | Dashboard ReactJs";
 
+  alertify.set("notifier", "position", "top-right");
+
   const [clientesList, setClientesList] = useState<ClientesType[]>([]);
 
   // localStorage.setItem("clientesDb", JSON.stringify(clientesList));

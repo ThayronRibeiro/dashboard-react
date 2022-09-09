@@ -50,6 +50,10 @@ type RowItemprops = {
 export const TableRowItem = styled.td<RowItemprops>`
   text-align: ${(props) => (props.center ? "center" : "left")};
   padding: 5px 15px;
+
+  i: first-child {
+    margin-right: 15px;
+  }
 `;
 
 export const ButtonsArea = styled.div`
@@ -80,7 +84,7 @@ export const ButtonsArea = styled.div`
     transition: all ease 0.5s;
   }
 
-  button:last-child {
+  button:nth-child(2) {
     background-color: red;
   }
 

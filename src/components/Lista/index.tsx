@@ -1,8 +1,9 @@
 import { ClientesType } from "../../routes/clientes";
 import * as SC from "../../styles/Table";
 import { useNavigate } from "react-router-dom";
-import { FaTrash, FaPlus } from "react-icons/fa";
+import { FaTrash, FaPlus, FaEdit } from "react-icons/fa";
 import { useEffect, useState } from "react";
+import alertify from "alertifyjs";
 
 type ListaProps = {
   arrayContent: ClientesType[];
@@ -40,6 +41,34 @@ export const Lista = ({ arrayContent, handleDel }: ListaProps) => {
     }
   }
 
+  const handleDelete = (id: string | undefined) => {
+    const parseClientes = JSON.parse(clientesDb!);
+    if (id) {
+      alertify
+        .confirm(
+          "Excluir cliente",
+          "Confirma a exclusão do cliente?",
+          () => {
+            const tempTask = parseClientes.filter(
+              (del: ClientesType) => del.id !== id
+            );
+            setClientesList(tempTask!);
+            localStorage.setItem("clientesDb", JSON.stringify(tempTask));
+          },
+          () => {}
+        )
+        .set("closable", false)
+        .set("labels", { ok: "Ok", cancel: "Cancelar" });
+      // if (window.confirm("Confirm task deletion?") == true) {
+      //   const tempTask = parseClientes.filter(
+      //     (del: ClientesType) => del.id !== id
+      //   );
+      //   setClientesList(tempTask!);
+      //   localStorage.setItem("clientesDb", JSON.stringify(tempTask));
+      // }
+    }
+  };
+
   return (
     <>
       <SC.ButtonsArea>
@@ -47,18 +76,19 @@ export const Lista = ({ arrayContent, handleDel }: ListaProps) => {
           <FaPlus />
           Adicionar
         </button>
-        <button onClick={handleDel}>
+        {/* <button onClick={handleDel}>
           <FaTrash /> Deletar
-        </button>
+        </button> */}
       </SC.ButtonsArea>
       <SC.ContainerList>
         <SC.Table>
           <SC.TableHeader>
             <tr>
-              <SC.TableHeaderItem width={5}></SC.TableHeaderItem>
+              {/* <SC.TableHeaderItem width={5}></SC.TableHeaderItem> */}
               <SC.TableHeaderItem width={15}>ID</SC.TableHeaderItem>
               <SC.TableHeaderItem width={700}>Nome</SC.TableHeaderItem>
               <SC.TableHeaderItem>Email</SC.TableHeaderItem>
+              <SC.TableHeaderItem></SC.TableHeaderItem>
             </tr>
           </SC.TableHeader>
           <SC.TableBody>
@@ -68,14 +98,14 @@ export const Lista = ({ arrayContent, handleDel }: ListaProps) => {
                   return (
                     <>
                       <SC.TableContent>
-                        <SC.TableRowItem center={true}>
+                        {/* <SC.TableRowItem center={true}>
                           <input
                             id="check"
                             placeholder="check"
                             type="checkbox"
                             onChange={() => handleCheckDel(item.id!)}
                           />
-                        </SC.TableRowItem>
+                        </SC.TableRowItem> */}
                         <SC.TableRowItem
                           onClick={() => {
                             if (item.id) {
@@ -102,6 +132,15 @@ export const Lista = ({ arrayContent, handleDel }: ListaProps) => {
                           }}
                         >
                           {item.email}
+                        </SC.TableRowItem>
+                        <SC.TableRowItem center={true}>
+                          <i>
+                            <FaEdit />
+                          </i>
+
+                          <i onClick={() => handleDelete(item.id)}>
+                            <FaTrash />
+                          </i>
                         </SC.TableRowItem>
                       </SC.TableContent>
                     </>
