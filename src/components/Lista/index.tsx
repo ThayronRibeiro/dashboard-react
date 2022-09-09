@@ -54,6 +54,7 @@ export const Lista = ({ arrayContent, handleDel }: ListaProps) => {
             );
             setClientesList(tempTask!);
             localStorage.setItem("clientesDb", JSON.stringify(tempTask));
+            alertify.success("Cliente excluído com sucesso!");
           },
           () => {}
         )
@@ -148,9 +149,11 @@ export const Lista = ({ arrayContent, handleDel }: ListaProps) => {
                 })}
               </>
             )}
-            {!arrayContent && <p>Não há registros para serem exibidos.</p>}
           </SC.TableBody>
         </SC.Table>
+        {arrayContent.length < 1 && (
+          <p>Não há registros para serem exibidos.</p>
+        )}
       </SC.ContainerList>
     </>
   );

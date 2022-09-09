@@ -3,6 +3,12 @@ import styled from "styled-components";
 export const ContainerList = styled.div`
   position: relative;
   overflow-x: auto;
+
+  p {
+    text-align: center;
+    font-weight: 700;
+    opacity: 0.5;
+  }
 `;
 
 export const Table = styled.table`
