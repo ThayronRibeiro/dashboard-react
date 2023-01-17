@@ -9,7 +9,7 @@ export type ClientesType = {
   id?: string;
   name?: string;
   email?: string;
-  userId?: string;
+  userAuthId?: string;
   selected?: boolean;
 };
 
@@ -22,13 +22,18 @@ export const Clientes = () => {
 
   // localStorage.setItem("clientesDb", JSON.stringify(clientesList));
   const clientesDb = localStorage.getItem("clientesDb");
+  const userAuthId = localStorage.getItem("userAuthId");
 
   useEffect(() => {
     if (clientesDb) {
       const parseClientes = JSON.parse(clientesDb);
-      setClientesList(parseClientes);
+      const correctClientes = parseClientes.filter(
+        (cliente: ClientesType) => cliente.userAuthId === userAuthId
+      );
+      console.log(correctClientes);
+      setClientesList(correctClientes);
     }
-  }, [clientesList, clientesDb]);
+  }, [clientesList, clientesDb, userAuthId]);
 
   const handleDel = () => {
     if (clientesDb) {
