@@ -24,7 +24,7 @@ export const ClientesInfo = () => {
       console.log(searchCliente);
       setCliente(searchCliente);
     }
-  }, [clientesDb]);
+  }, [clientesDb, id]);
 
   return (
     <>

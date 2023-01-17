@@ -1,4 +1,4 @@
-import { useState, useEffect, ChangeEvent } from "react";
+import { useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Menu } from "../components/Menu";
 import * as SC from "../styles/ContainerContent";
@@ -13,67 +13,7 @@ export const Home = () => {
         nav("/");
         break;
     }
-  }, []);
-
-  // useEffect(() => {
-  //   const loggedInUser = localStorage.getItem("authenticated");
-  //   if (loggedInUser) {
-  //     setAuthenticated(!!loggedInUser);
-  //   }
-  // }, [authenticated, signed]);
-
-  // const lerXml = (e: ChangeEvent<HTMLInputElement>) => {
-  var loadXMLDoc = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      let nameFile = e.target.files[0].name;
-
-      var xmlhttp = new XMLHttpRequest();
-      xmlhttp.open("GET", `${nameFile}`, false);
-      xmlhttp.setRequestHeader("Content-Type", "text/xml");
-      xmlhttp.onreadystatechange = function () {
-        if (xmlhttp.readyState == 4) {
-          alert(xmlhttp.responseXML);
-        }
-      };
-      xmlhttp.send();
-      var xmlDoc = xmlhttp.responseXML;
-      var i;
-
-      //console.log(xmlDoc);
-
-      var table = `<tr><th>Firstname</th><th>Lastname</th>
-              <th>Title</th><th>Division</th>
-              <th>Building</th><th>Room</th>
-          </tr>`;
-      if (xmlDoc) {
-        var x = xmlDoc.getElementsByTagName("Employee");
-
-        for (i = 0; i < x.length; i++) {
-          table +=
-            "<tr><td>" +
-            x[i].getElementsByTagName("Firstname")[0].childNodes[0].nodeValue +
-            "</td><td>" +
-            x[i].getElementsByTagName("Lastname")[0].childNodes[0].nodeValue +
-            "</td><td>" +
-            x[i].getElementsByTagName("Title")[0].childNodes[0].nodeValue +
-            "</td><td>" +
-            x[i].getElementsByTagName("Division")[0].childNodes[0].nodeValue +
-            "</td><td>" +
-            x[i].getElementsByTagName("Building")[0].childNodes[0].nodeValue +
-            "</td><td>" +
-            x[i].getElementsByTagName("Room")[0].childNodes[0].nodeValue +
-            "</td></tr>";
-        }
-
-        // Print the xml data in table form
-        let tableHTML = document.getElementById("id");
-        if (tableHTML) {
-          tableHTML.innerHTML = table;
-        }
-      }
-      console.log("teste");
-    }
-  };
+  }, [auth, nav]);
 
   if (!!auth) {
     return (

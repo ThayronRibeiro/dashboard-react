@@ -5,11 +5,11 @@ import { useForm } from "react-hook-form";
 import alertify from "alertifyjs";
 import "alertifyjs/build/alertify.min.js";
 import "alertifyjs/build/css/alertify.min.css";
-import { Users } from "./cadastro";
+//import { Users } from "./cadastro";
 import { Modal } from "../components/Modal";
-import { info } from "console";
-import { click } from "@testing-library/user-event/dist/click";
-import { JsxElement } from "typescript";
+//import { info } from "console";
+//import { click } from "@testing-library/user-event/dist/click";
+//import { JsxElement } from "typescript";
 
 type Props = {
   loginOk?: () => void;

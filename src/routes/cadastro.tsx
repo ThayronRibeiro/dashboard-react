@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import * as SC from "../styles/Form";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import alertify from "alertifyjs";
 import { v4 as uuid } from "uuid";

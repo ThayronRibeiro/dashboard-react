@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { ErrorContainer, ErrorContainerContent, Button } from "../styles/Error";
-import searchIcon from "../assets/images/searching.png";
+//import searchIcon from "../assets/images/searching.png";
 import searchWhiteIcon from "../assets/images/searching-white.png";
 
 export const ErrorPage = () => {
@@ -16,7 +16,7 @@ export const ErrorPage = () => {
           Mas não se preocupe, para continuar navegando clique no botão abaixo!
         </h3>
 
-        <Button onClick={() => nav("/")}>Voltar a navegar</Button>
+        <Button onClick={() => nav(-1)}>Voltar a navegar</Button>
       </ErrorContainerContent>
 
       {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">

@@ -1,4 +1,4 @@
-import { FaRegIdBadge } from "react-icons/fa";
+//import { FaRegIdBadge } from "react-icons/fa";
 import styled from "styled-components";
 
 import userBlank from "../assets/images/user.png";

@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import { InputFiles } from "typescript";
+//import { InputFiles } from "typescript";
 import { Menu } from "../components/Menu";
 import {
   ConfigContainer,
@@ -13,10 +13,10 @@ import {
 
 import * as SC from "../styles/ContainerContent";
 
-import userBlank from "../assets/images/user.png";
+//import userBlank from "../assets/images/user.png";
 import { Users } from "./cadastro";
 
-import { FaArrowDown, FaCaretDown, FaCaretUp } from "react-icons/fa";
+import { FaCaretDown, FaCaretUp } from "react-icons/fa";
 
 export const Configuracoes = () => {
   document.title = "Configurações | Dashboard ReactJs";
@@ -88,7 +88,7 @@ export const Configuracoes = () => {
       );
       setUsersAuthInfo(account);
     }
-  }, [usersAuthInfo]);
+  }, [usersAuthInfo, usersDb]);
 
   const getBase64 = (file: any): any => {
     let reader = new FileReader();

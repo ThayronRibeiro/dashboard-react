@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Login } from "./login";
 import { Home } from "./home";
-import { Teste } from "./teste";
+//import { Teste } from "./teste";
 import { ErrorPage } from "./error";
 import { Cadastro } from "./cadastro";
 import { Configuracoes } from "./configuracoes";
