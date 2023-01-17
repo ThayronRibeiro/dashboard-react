@@ -4,6 +4,7 @@ import { Menu } from "../components/Menu";
 import { ContainerContent } from "../styles/ContainerContent";
 import alertify from "alertifyjs";
 
+//** Tipagem de Cliente */
 export type ClientesType = {
   key?: string;
   id?: string;
@@ -19,8 +20,6 @@ export const Clientes = () => {
   alertify.set("notifier", "position", "top-right");
 
   const [clientesList, setClientesList] = useState<ClientesType[]>([]);
-
-  // localStorage.setItem("clientesDb", JSON.stringify(clientesList));
   const clientesDb = localStorage.getItem("clientesDb");
   const userAuthId = localStorage.getItem("userAuthId");
 
@@ -30,7 +29,7 @@ export const Clientes = () => {
       const correctClientes = parseClientes.filter(
         (cliente: ClientesType) => cliente.userAuthId === userAuthId
       );
-      console.log(correctClientes);
+      //console.log(correctClientes);
       setClientesList(correctClientes);
     }
   }, [clientesList, clientesDb, userAuthId]);

@@ -8,25 +8,27 @@ import { v4 as uuid } from "uuid";
 import "alertifyjs/build/alertify.min.js";
 import "alertifyjs/build/css/alertify.min.css";
 
+//** Tipagem dos usuários */
 export type Users = {
   id?: string;
   userName?: string;
   password?: string;
   imgUser?: string;
+  genCliente?: number | undefined;
 };
 
 export const Cadastro = () => {
   const [username, setusername] = useState("");
   const [password, setpassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const users = [{ username: "admin", password: "123" }];
+  //const users = [{ username: "admin", password: "123" }];
   const [usersDb, setUsersDb] = useState<Users[]>([]);
 
   alertify.set("notifier", "position", "top-right");
   document.title = "Cadastro | Dashboard ReactJs";
 
   const navigate = useNavigate();
-  const [authenticated, setauthenticated] = useState(false);
+  //const [authenticated, setauthenticated] = useState(false);
   const auth = localStorage.getItem("authenticated");
 
   const {
@@ -56,6 +58,7 @@ export const Cadastro = () => {
             userName: username,
             password: password,
             imgUser: "",
+            genCliente: 0,
           });
 
           localStorage.setItem("usersDb", JSON.stringify(usersArray));
@@ -69,6 +72,7 @@ export const Cadastro = () => {
         userName: username,
         password: password,
         imgUser: "",
+        genCliente: 0,
       });
       localStorage.setItem("usersDb", JSON.stringify(usersDb));
       console.log(localStorage.getItem("usersDb"));
@@ -97,7 +101,7 @@ export const Cadastro = () => {
     return () => {
       document.removeEventListener("keydown", listener);
     };
-  }, [username, password, confirmPassword, onSubmit, handleSubmit]);
+  }, [username, password, confirmPassword, handleSubmit]);
 
   return (
     <SC.ContainerCadastro>

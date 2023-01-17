@@ -6,24 +6,61 @@ import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { useNavigate } from "react-router-dom";
 import alertify from "alertifyjs";
-import { ClientesType } from "../clientes";
+// import { ClientesType } from "../clientes";
 import { AddContainer } from "../../styles/ClientePage";
+import { Users } from "../cadastro";
 
 export const ClientesAdd = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [confirmEmail, setConfirmEmail] = useState("");
 
-  const [clientes, setclientes] = useState<any[]>([]);
+  const [clientes, setClientes] = useState<any[]>([]);
 
   const nav = useNavigate();
 
   const clientesDb = localStorage.getItem("clientesDb");
   const userAuthId = localStorage.getItem("userAuthId");
+  const usersDb = localStorage.getItem("usersDb");
+
+  const [atualUser, setAtualUser] = useState<Users[]>([]);
+  const [genCliente, setGenCliente] = useState<any>();
+
+  // if (usersDb) {
+  //   const parseUsers = JSON.parse(usersDb);
+  //   const atualUserFilter = parseUsers.filter(
+  //     (user: Users) => user.id === userAuthId
+  //   );
+  //   setAtualUser(atualUserFilter);
+  // }
+
+  // console.log("usuario atual:" + atualUser?.userName);
 
   useEffect(() => {
-    const userAuthId = localStorage.getItem("userAuthId");
-  }, [userAuthId]);
+    if (usersDb) {
+      const parseUsers = JSON.parse(usersDb);
+      const atualUserFilter = parseUsers.filter(
+        (user: Users) => user.id === userAuthId
+      );
+      setAtualUser(atualUserFilter);
+      setGenCliente(
+        atualUser.map((user) => {
+          return user.genCliente;
+        })
+      );
+
+      console.log(
+        "usuario atual:" +
+          atualUser.map((user) => {
+            return user.userName;
+          })
+      );
+    }
+  }, [usersDb, userAuthId, atualUser]);
+
+  // useEffect(() => {
+  //   const userAuthId = localStorage.getItem("userAuthId");
+  // }, [userAuthId]);
 
   const {
     register,
@@ -36,7 +73,8 @@ export const ClientesAdd = () => {
     if (clientesDb) {
       const parseClientes = JSON.parse(clientesDb);
       parseClientes.push({
-        key: parseClientes.length + 1,
+        //key: parseClientes.length + 1,
+        key: parseInt(genCliente) + 1,
         id: uuid(),
         name,
         email,
@@ -47,7 +85,8 @@ export const ClientesAdd = () => {
     } else {
       if (userAuthId) {
         clientes.push({
-          key: clientes.length + 1,
+          // key: clientes.length + 1,
+          key: parseInt(genCliente) + 1,
           id: uuid(),
           name,
           email,
@@ -56,6 +95,17 @@ export const ClientesAdd = () => {
         });
         localStorage.setItem("clientesDb", JSON.stringify(clientes));
       }
+    }
+
+    const users = localStorage.getItem("usersDb");
+    if (users) {
+      const parseUsers = JSON.parse(users);
+      const altGenerator = parseUsers.find(
+        (user: any) => user.id === userAuthId
+      );
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      altGenerator.genCliente = parseInt(genCliente) + 1;
+      localStorage.setItem("usersDb", JSON.stringify(parseUsers));
     }
 
     alertify.success("Cliente cadastrado com sucesso!");
