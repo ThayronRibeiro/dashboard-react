@@ -89,8 +89,8 @@ export const Lista = ({ arrayContent, handleDel }: ListaProps) => {
           <SC.TableHeader>
             <tr>
               {/* <SC.TableHeaderItem width={5}></SC.TableHeaderItem> */}
-              <SC.TableHeaderItem width={15}>ID</SC.TableHeaderItem>
-              <SC.TableHeaderItem width={700}>Nome</SC.TableHeaderItem>
+              <SC.TableHeaderItem>ID</SC.TableHeaderItem>
+              <SC.TableHeaderItem>Nome</SC.TableHeaderItem>
               <SC.TableHeaderItem>Email</SC.TableHeaderItem>
               <SC.TableHeaderItem></SC.TableHeaderItem>
             </tr>

@@ -9,6 +9,7 @@ export const CardArea = styled.div`
   padding: 25px;
   justify-content: center;
   align-items: center;
+  border-bottom: 2px #d3d3d3 solid;
 
   @media (min-width: 768px) {
     grid-template-columns: repeat(4, 1fr);

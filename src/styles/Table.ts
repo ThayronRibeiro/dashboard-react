@@ -13,20 +13,20 @@ export const ContainerList = styled.div`
 `;
 
 export const Table = styled.table`
-  margin-top: 15px;
-  width: 100%;
+  //margin-top: 15px;
+  min-width: 100%;
   margin: 25px 0;
-
-  /* @media screen and (min-width: 768px) {
+  font-size: 0.6rem;
+  @media screen and (min-width: 768px) {
     & {
-      max-width: 100%;
+      /* max-width: 100vw; */
+      font-size: 0.9rem;
     }
-  } */
+  }
 `;
 
 export const TableHeader = styled.thead`
-  height: 35px;
-  width: 100%;
+  height: 25px;
   background-color: var(--babyBlue);
   border-bottom: #c1c1c1 5px solid;
   color: var(--white);
@@ -38,7 +38,7 @@ type TableHeaderItemProps = {
 };
 export const TableHeaderItem = styled.th<TableHeaderItemProps>`
   padding: 0 15px;
-  width: ${(props) => `${props.width}px`};
+  /* width: ${(props) => `${props.width}px`}; */
 `;
 
 type TableBodyProps = {
@@ -52,9 +52,9 @@ type TableContentProps = {
 export const TableBody = styled.tbody<TableBodyProps>``;
 
 export const TableContent = styled.tr<TableContentProps>`
-  padding: 5px 15px;
+  padding: 5px 10px;
   background-color: #f1f1f1;
-  min-height: 35px;
+  min-height: 15px;
   border-bottom: #c1c1c1 1px solid;
   cursor: pointer;
 `;

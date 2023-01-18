@@ -45,7 +45,7 @@ export const Home = () => {
       <>
         <Menu />
         <SC.ContainerContent>
-          <h2>Home</h2>
+          <h2>Página Inicial</h2>
           <>
             <CardArea>
               {cardValues && (
