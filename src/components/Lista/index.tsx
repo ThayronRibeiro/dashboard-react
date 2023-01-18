@@ -2,8 +2,9 @@ import { ClientesType } from "../../routes/clientes";
 import * as SC from "../../styles/Table";
 import { useNavigate } from "react-router-dom";
 import { FaTrash, FaPlus, FaEdit } from "react-icons/fa";
-import { useEffect, useState } from "react";
+import { RefObject, useEffect, useState } from "react";
 import alertify from "alertifyjs";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 type ListaProps = {
   arrayContent: ClientesType[];
@@ -22,6 +23,8 @@ export const Lista = ({ arrayContent, handleDel }: ListaProps) => {
   const [clientesList, setClientesList] = useState<ClientesType[]>([]);
 
   const clientesDb = localStorage.getItem("clientesDb");
+
+  const [parent, enableAnimations] = useAutoAnimate();
 
   useEffect(() => {
     if (clientesDb) {
@@ -92,57 +95,51 @@ export const Lista = ({ arrayContent, handleDel }: ListaProps) => {
               <SC.TableHeaderItem></SC.TableHeaderItem>
             </tr>
           </SC.TableHeader>
-          <SC.TableBody>
+          <SC.TableBody ref={parent as RefObject<HTMLTableSectionElement>}>
             {arrayContent && (
               <>
                 {arrayContent.map((item) => {
                   return (
                     <>
                       <SC.TableContent>
-                        {/* <SC.TableRowItem center={true}>
-                          <input
-                            id="check"
-                            placeholder="check"
-                            type="checkbox"
-                            onChange={() => handleCheckDel(item.id!)}
-                          />
-                        </SC.TableRowItem> */}
-                        <SC.TableRowItem
-                          onClick={() => {
-                            if (item.id) {
-                              handleClick(item.id);
-                            }
-                          }}
-                        >
-                          {item.key}
-                        </SC.TableRowItem>
-                        <SC.TableRowItem
-                          onClick={() => {
-                            if (item.id) {
-                              handleClick(item.id);
-                            }
-                          }}
-                        >
-                          {item.name}
-                        </SC.TableRowItem>
-                        <SC.TableRowItem
-                          onClick={() => {
-                            if (item.id) {
-                              handleClick(item.id);
-                            }
-                          }}
-                        >
-                          {item.email}
-                        </SC.TableRowItem>
-                        <SC.TableRowItem center={true}>
-                          <i>
-                            <FaEdit />
-                          </i>
+                        <>
+                          <SC.TableRowItem
+                            onClick={() => {
+                              if (item.id) {
+                                handleClick(item.id);
+                              }
+                            }}
+                          >
+                            {item.key}
+                          </SC.TableRowItem>
+                          <SC.TableRowItem
+                            onClick={() => {
+                              if (item.id) {
+                                handleClick(item.id);
+                              }
+                            }}
+                          >
+                            {item.name}
+                          </SC.TableRowItem>
+                          <SC.TableRowItem
+                            onClick={() => {
+                              if (item.id) {
+                                handleClick(item.id);
+                              }
+                            }}
+                          >
+                            {item.email}
+                          </SC.TableRowItem>
+                          <SC.TableRowItem center={true}>
+                            <i>
+                              <FaEdit />
+                            </i>
 
-                          <i onClick={() => handleDelete(item.id)}>
-                            <FaTrash />
-                          </i>
-                        </SC.TableRowItem>
+                            <i onClick={() => handleDelete(item.id)}>
+                              <FaTrash />
+                            </i>
+                          </SC.TableRowItem>
+                        </>
                       </SC.TableContent>
                     </>
                   );

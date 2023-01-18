@@ -1,3 +1,4 @@
+import { RefObject } from "react";
 import styled from "styled-components";
 
 export const ContainerList = styled.div`
@@ -40,9 +41,17 @@ export const TableHeaderItem = styled.th<TableHeaderItemProps>`
   width: ${(props) => `${props.width}px`};
 `;
 
-export const TableBody = styled.tbody``;
+type TableBodyProps = {
+  ref?: RefObject<Element>;
+};
 
-export const TableContent = styled.tr`
+type TableContentProps = {
+  ref?: RefObject<Element>;
+};
+
+export const TableBody = styled.tbody<TableBodyProps>``;
+
+export const TableContent = styled.tr<TableContentProps>`
   padding: 5px 15px;
   background-color: #f1f1f1;
   min-height: 35px;
