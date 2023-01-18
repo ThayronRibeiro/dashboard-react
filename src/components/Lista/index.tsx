@@ -102,44 +102,42 @@ export const Lista = ({ arrayContent, handleDel }: ListaProps) => {
                   return (
                     <>
                       <SC.TableContent>
-                        <>
-                          <SC.TableRowItem
-                            onClick={() => {
-                              if (item.id) {
-                                handleClick(item.id);
-                              }
-                            }}
-                          >
-                            {item.key}
-                          </SC.TableRowItem>
-                          <SC.TableRowItem
-                            onClick={() => {
-                              if (item.id) {
-                                handleClick(item.id);
-                              }
-                            }}
-                          >
-                            {item.name}
-                          </SC.TableRowItem>
-                          <SC.TableRowItem
-                            onClick={() => {
-                              if (item.id) {
-                                handleClick(item.id);
-                              }
-                            }}
-                          >
-                            {item.email}
-                          </SC.TableRowItem>
-                          <SC.TableRowItem center={true}>
-                            <i>
-                              <FaEdit />
-                            </i>
+                        <SC.TableRowItem
+                          onClick={() => {
+                            if (item.id) {
+                              handleClick(item.id);
+                            }
+                          }}
+                        >
+                          {item.key}
+                        </SC.TableRowItem>
+                        <SC.TableRowItem
+                          onClick={() => {
+                            if (item.id) {
+                              handleClick(item.id);
+                            }
+                          }}
+                        >
+                          {item.name}
+                        </SC.TableRowItem>
+                        <SC.TableRowItem
+                          onClick={() => {
+                            if (item.id) {
+                              handleClick(item.id);
+                            }
+                          }}
+                        >
+                          {item.email}
+                        </SC.TableRowItem>
+                        <SC.TableRowItem center={true}>
+                          <i>
+                            <FaEdit />
+                          </i>
 
-                            <i onClick={() => handleDelete(item.id)}>
-                              <FaTrash />
-                            </i>
-                          </SC.TableRowItem>
-                        </>
+                          <i onClick={() => handleDelete(item.id)}>
+                            <FaTrash />
+                          </i>
+                        </SC.TableRowItem>
                       </SC.TableContent>
                     </>
                   );
