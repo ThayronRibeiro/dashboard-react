@@ -51,25 +51,15 @@ export const Cadastro = () => {
       senha
     }
 
-    if(usuarioSaved.id){
-      service.atualizar(usuarioSaved).then(()=>{
-        alertify.error("Teste");
-      })
-    }
-    else{
-      service
-      .salvar(usuarioSaved)
-      .then(()=>{
-        alertify.success("Usuário cadastrado com sucesso!");
-        navigate("/");
-      })
-
-    }
-
-      
-      
-      
-
+    service
+    .salvar(usuarioSaved)
+    .then(()=>{
+      alertify.success("Usuário cadastrado com sucesso!");
+      navigate("/");
+    })
+    .catch(()=>{
+      alertify.error("Usuário já cadastrado! Por favor utilize outro usuário!");
+    })
 
     /*
     const users = localStorage.getItem("usersDb");
