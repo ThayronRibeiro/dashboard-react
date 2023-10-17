@@ -110,7 +110,7 @@ export const Configuracoes = () => {
         const account: Users = usersArray.find(
           (user: any) => user.id === localStorage.getItem("userAuthId")
         );
-        console.log(`Teste: ${account.userName}`);
+        console.log(`Teste: ${account.usuario}`);
         account.imgUser = "";
 
         localStorage.setItem("usersDb", JSON.stringify(usersArray));
@@ -153,26 +153,26 @@ export const Configuracoes = () => {
             {contentCadastro ? <FaCaretUp /> : <FaCaretDown />}
           </TitleConfigToogle>
           <ContentToogle visibleToogle={contentCadastro}>
-            <FieldConfig htmlFor="userName">Usuário</FieldConfig>
+            <FieldConfig htmlFor="usuario">Usuário</FieldConfig>
             <InputField
-              id="userName"
+              id="usuario"
               placeholder=""
-              value={usersAuthInfo?.userName}
+              value={usersAuthInfo?.usuario}
               disabled
             />
 
-            <FieldConfig htmlFor="userName">Nome</FieldConfig>
+            <FieldConfig htmlFor="usuario">Nome</FieldConfig>
             <InputField
-              id="userName"
+              id="usuario"
               placeholder=""
-              value={usersAuthInfo?.userName}
+              value={usersAuthInfo?.usuario}
             />
 
-            <FieldConfig htmlFor="userName">Senha</FieldConfig>
+            <FieldConfig htmlFor="usuario">Senha</FieldConfig>
             <InputField
-              id="userName"
+              id="usuario"
               placeholder=""
-              value={usersAuthInfo?.password}
+              value={usersAuthInfo?.senha}
             />
           </ContentToogle>
 
@@ -181,26 +181,26 @@ export const Configuracoes = () => {
             {contentApp ? <FaCaretUp /> : <FaCaretDown />}
           </TitleConfigToogle>
           <ContentToogle visibleToogle={contentApp}>
-            <FieldConfig htmlFor="userName">Usuário</FieldConfig>
+            <FieldConfig htmlFor="usuario">Usuário</FieldConfig>
             <InputField
-              id="userName"
+              id="usuario"
               placeholder=""
-              value={usersAuthInfo?.userName}
+              value={usersAuthInfo?.usuario}
               disabled
             />
 
-            <FieldConfig htmlFor="userName">Nome</FieldConfig>
+            <FieldConfig htmlFor="usuario">Nome</FieldConfig>
             <InputField
-              id="userName"
+              id="usuario"
               placeholder=""
-              value={usersAuthInfo?.userName}
+              value={usersAuthInfo?.usuario}
             />
 
-            <FieldConfig htmlFor="userName">Senha</FieldConfig>
+            <FieldConfig htmlFor="usuario">Senha</FieldConfig>
             <InputField
-              id="userName"
+              id="usuario"
               placeholder=""
-              value={usersAuthInfo?.password}
+              value={usersAuthInfo?.senha}
             />
           </ContentToogle>
         </ConfigContainer>

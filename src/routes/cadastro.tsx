@@ -5,23 +5,28 @@ import { useForm } from "react-hook-form";
 import alertify from "alertifyjs";
 import { v4 as uuid } from "uuid";
 
+import {useUserService} from '../app/services'
+
 import "alertifyjs/build/alertify.min.js";
 import "alertifyjs/build/css/alertify.min.css";
+import { User } from "../app/models/users";
 
 //** Tipagem dos usuários */
 export type Users = {
   id?: string;
-  userName?: string;
-  password?: string;
+  usuario?: string;
+  senha?: string;
   imgUser?: string;
   genCliente?: number | undefined;
 };
 
 export const Cadastro = () => {
-  const [username, setusername] = useState("");
-  const [password, setpassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  //const users = [{ username: "admin", password: "123" }];
+
+  const service = useUserService();
+  const [usuario, setusuario] = useState("");
+  const [senha, setsenha] = useState("");
+  const [confirmsenha, setConfirmsenha] = useState("");
+  //const users = [{ usuario: "admin", senha: "123" }];
   const [usersDb, setUsersDb] = useState<Users[]>([]);
 
   alertify.set("notifier", "position", "top-right");
@@ -37,17 +42,46 @@ export const Cadastro = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data: any) => {
+
+
+  const onSubmit = () => {
+
+    const usuarioSaved: User = {
+      usuario,
+      senha
+    }
+
+    if(usuarioSaved.id){
+      service.atualizar(usuarioSaved).then(()=>{
+        alertify.error("Teste");
+      })
+    }
+    else{
+      service
+      .salvar(usuarioSaved)
+      .then(()=>{
+        alertify.success("Usuário cadastrado com sucesso!");
+        navigate("/");
+      })
+
+    }
+
+      
+      
+      
+
+
+    /*
     const users = localStorage.getItem("usersDb");
     if (users) {
       const usersArray: Users[] = JSON.parse(users);
       const account = usersArray.find(
-        (user) => user.userName === data.userName
+        (user) => user.usuario === data.email
       );
       if (account) {
         alertify.error("Usuário já cadastrado!");
       } else {
-        if (password !== confirmPassword) {
+        if (senha !== confirmsenha) {
           let div = document.getElementById("form");
           if (div != null) {
             div.innerHTML = `<p>As senhas não coincidem!</p>`;
@@ -55,8 +89,8 @@ export const Cadastro = () => {
         } else {
           usersArray.push({
             id: uuid(),
-            userName: username,
-            password: password,
+            usuario: usuario,
+            senha: senha,
             imgUser: "",
             genCliente: 0,
           });
@@ -69,8 +103,8 @@ export const Cadastro = () => {
     } else {
       usersDb.push({
         id: uuid(),
-        userName: username,
-        password: password,
+        usuario: usuario,
+        senha: senha,
         imgUser: "",
         genCliente: 0,
       });
@@ -79,6 +113,7 @@ export const Cadastro = () => {
       alertify.success("Usuário cadastrado com sucesso!");
       navigate("/");
     }
+    */
   };
 
   useEffect(() => {
@@ -101,7 +136,7 @@ export const Cadastro = () => {
     return () => {
       document.removeEventListener("keydown", listener);
     };
-  }, [username, password, confirmPassword, handleSubmit]);
+  }, [usuario, senha, confirmsenha, handleSubmit]);
 
   return (
     <SC.ContainerCadastro>
@@ -111,35 +146,35 @@ export const Cadastro = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <label>Usuário</label>
           <SC.InputField
-            id="userName"
+            id="usuario"
             type="text"
-            value={username}
+            value={usuario}
             placeholder="Digite seu usuário!"
-            {...register("userName", { required: true })}
-            onChange={(e) => setusername(e.target.value.toLowerCase())}
-            errors={errors.userName && !username}
+            {...register("usuario", { required: true })}
+            onChange={(e) => setusuario(e.target.value.toLowerCase())}
+            errors={errors.usuario && !usuario}
           />
-          {errors.userName && !username && <p>Digite seu usuário!</p>}
+          {errors.usuario && !usuario && <p>Digite seu usuário!</p>}
           <label>Senha</label>
           <SC.InputField
             type="password"
             placeholder="Digite sua senha"
-            value={password}
-            {...register("password", { required: true })}
-            onChange={(e) => setpassword(e.target.value)}
-            errors={errors.password && !password}
+            value={senha}
+            {...register("senha", { required: true })}
+            onChange={(e) => setsenha(e.target.value)}
+            errors={errors.senha && !senha}
           />
-          {errors.password && !password && <p>Digite sua senha!</p>}
+          {errors.senha && !senha && <p>Digite sua senha!</p>}
           <label>Confirmação de senha</label>
           <SC.InputField
             type="password"
             placeholder="Digite sua confirmação de senha"
-            value={confirmPassword}
-            {...register("confirmPassword", { required: true })}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            errors={errors.confirmPassword && !confirmPassword}
+            value={confirmsenha}
+            {...register("confirmsenha", { required: true })}
+            onChange={(e) => setConfirmsenha(e.target.value)}
+            errors={errors.confirmsenha && !confirmsenha}
           />
-          {errors.password && !password && <p>Digite sua senha!</p>}
+          {errors.senha && !senha && <p>Digite sua senha!</p>}
           <div id="form"></div>
           <input type="submit" value="Cadastrar" id="inputCadastro" />
           <span translate="no">

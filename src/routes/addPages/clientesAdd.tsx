@@ -52,7 +52,7 @@ export const ClientesAdd = () => {
       console.log(
         "usuario atual:" +
           atualUser.map((user) => {
-            return user.userName;
+            return user.usuario;
           })
       );
     }
@@ -69,7 +69,6 @@ export const ClientesAdd = () => {
   } = useForm();
 
   const onSubmit = (data: any) => {
-    console.log("Teste");
     if (clientesDb) {
       const parseClientes = JSON.parse(clientesDb);
       parseClientes.push({
