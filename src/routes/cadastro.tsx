@@ -51,15 +51,25 @@ export const Cadastro = () => {
       senha
     }
 
-    service
-    .salvar(usuarioSaved)
-    .then(()=>{
-      alertify.success("Usuário cadastrado com sucesso!");
-      navigate("/");
-    })
-    .catch(()=>{
-      alertify.error("Usuário já cadastrado! Por favor utilize outro usuário!");
-    })
+    if(senha !== confirmsenha){
+      let div = document.getElementById("form");
+      if (div != null) {
+        div.innerHTML = `<p>As senhas não coincidem!</p>`;
+      }
+    }
+    else{
+      service
+      .salvar(usuarioSaved)
+      .then(()=>{
+        alertify.success("Usuário cadastrado com sucesso!");
+        navigate("/");
+      })
+      .catch((err)=>{
+        alertify.error("Usuário já cadastrado! Por favor utilize outro usuário!");
+      })
+
+    }
+
 
     /*
     const users = localStorage.getItem("usersDb");

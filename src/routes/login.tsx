@@ -7,9 +7,12 @@ import "alertifyjs/build/alertify.min.js";
 import "alertifyjs/build/css/alertify.min.css";
 //import { Users } from "./cadastro";
 import { Modal } from "../components/Modal";
+import { User } from "../app/models/users";
 //import { info } from "console";
 //import { click } from "@testing-library/user-event/dist/click";
 //import { JsxElement } from "typescript";
+
+import {useUserService} from '../app/services'
 
 type Props = {
   loginOk?: () => void;
@@ -18,8 +21,10 @@ type Props = {
 export const Login = ({ loginOk }: Props) => {
   alertify.set("notifier", "position", "top-right");
 
-  const [username, setusername] = useState("");
-  const [password, setpassword] = useState("");
+
+  const service = useUserService();
+  const [usuario, setusuario] = useState("");
+  const [senha, setsenha] = useState("");
   const [showModal, setShowModal] = useState(false);
 
   const [usernameChange, setUsernameChange] = useState("");
@@ -42,10 +47,36 @@ export const Login = ({ loginOk }: Props) => {
     formState: { errors },
   } = useForm();
 
-  const account = users.find((user) => user.username === username);
+  const account = users.find((user) => user.username === usuario);
 
-  const onSubmit = (data: any) => {
-    const account = users.find((user) => user.username === data.userName);
+  const onSubmit = (data: User) => {
+
+    const usuarioLogin : User = {
+      usuario,
+      senha
+    }
+
+    service
+    .logar(usuarioLogin)
+    .then(()=>{
+      setauthenticated(true);
+      localStorage.setItem("authenticated", "true");
+      navigate("/home");
+    })
+    .catch(()=>{
+      let div = document.getElementById("form");
+      if (div != null) {
+        div.innerHTML = `<p>Usuário ou senha incorretos!</p>`;
+        setTimeout(() => {
+          if (div != null) {
+            div.innerHTML = "";
+          }
+        }, 2000)
+      }
+    })
+
+
+   /* const account = users.find((user) => user.username === data.userName);
     const usersDb = localStorage.getItem("usersDb");
     if (usersDb) {
       const array = JSON.parse(usersDb);
@@ -82,7 +113,7 @@ export const Login = ({ loginOk }: Props) => {
           }
         }, 2000);
       }
-    }
+    }*/
   };
 
   const handleSearchUser = (
@@ -160,7 +191,7 @@ export const Login = ({ loginOk }: Props) => {
         form.removeEventListener("keydown", listener);
       }
     };
-  }, [username, password, onSubmit, handleSubmit]);
+  }, [usuario, senha, onSubmit, handleSubmit]);
 
   const handleChangePassword = () => {
     setShowModal(true);
@@ -234,24 +265,24 @@ export const Login = ({ loginOk }: Props) => {
             <SC.InputField
               id="userName"
               type="text"
-              value={username}
+              value={usuario}
               placeholder="Digite seu usuário"
-              {...register("userName", { required: true })}
-              onChange={(e) => setusername(e.target.value.toLowerCase())}
-              errors={errors.userName && !username}
+              {...register("usuario", { required: true })}
+              onChange={(e) => setusuario(e.target.value.toLowerCase())}
+              errors={errors.usuario && !usuario}
             />
-            {errors.userName && !username && <p>Digite seu usuário!</p>}
+            {errors.usuario && !usuario && <p>Digite seu usuário!</p>}
             <label>Senha</label>
             <SC.InputField
               id="password"
               type="password"
               placeholder="Digite sua senha"
-              value={password}
-              {...register("password", { required: true })}
-              onChange={(e) => setpassword(e.target.value)}
-              errors={errors.password && !password}
+              value={senha}
+              {...register("senha", { required: true })}
+              onChange={(e) => setsenha(e.target.value)}
+              errors={errors.senha && !senha}
             />
-            {errors.password && !password && <p>Digite sua senha!</p>}
+            {errors.senha && !senha && <p>Digite sua senha!</p>}
 
             <div id="form"></div>
             <input type="submit" value="Entrar" id="inputLogin" />

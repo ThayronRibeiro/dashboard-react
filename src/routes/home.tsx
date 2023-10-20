@@ -4,6 +4,7 @@ import Cards from "../components/Cards";
 import { Menu } from "../components/Menu";
 import { CardArea } from "../styles/Cards";
 import * as SC from "../styles/ContainerContent";
+import { Layout } from "components/common/Layout";
 
 export const Home = () => {
   const auth = localStorage.getItem("authenticated");
@@ -40,31 +41,16 @@ export const Home = () => {
     }
   });
 
-  if (!!auth) {
-    return (
+  return (
+    <Layout title="Home">
       <>
-        <Menu />
-        <SC.ContainerContent>
-          <h2>Página Inicial</h2>
-          <>
-            <CardArea>
-              {cardValues && (
-                <>
-                  {cardValues.map((cardItem) => {
-                    return (
-                      <>
-                        <Cards title={cardItem.title} qtde={cardItem.qtde} />
-                      </>
-                    );
-                  })}
-                </>
-              )}
-            </CardArea>
-          </>
-        </SC.ContainerContent>
+        <CardArea>
+          {cardValues &&
+            cardValues.map((cards) => (
+              <Cards key={cards.title} title={cards.title} qtde={cards.qtde} />
+            ))}
+        </CardArea>
       </>
-    );
-  } else {
-    return <Navigate replace to="/" />;
-  }
+    </Layout>
+  );
 };

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Lista } from "../components/Lista";
 import { Menu } from "../components/Menu";
+import { Navigate, useNavigate } from "react-router-dom";
 import { ContainerContent } from "../styles/ContainerContent";
 import alertify from "alertifyjs";
 
@@ -22,6 +23,16 @@ export const Clientes = () => {
   const [clientesList, setClientesList] = useState<ClientesType[]>([]);
   const clientesDb = localStorage.getItem("clientesDb");
   const userAuthId = localStorage.getItem("userAuthId");
+  const auth = localStorage.getItem("authenticated");
+  const nav = useNavigate();
+
+  useEffect(() => {
+    switch (auth) {
+      case "false":
+        nav("/");
+        break;
+    }
+  }, [auth, nav]);
 
   useEffect(() => {
     if (clientesDb) {
@@ -50,14 +61,18 @@ export const Clientes = () => {
     }
   };
 
-  return (
-    <>
-      <Menu />
-      <ContainerContent>
-        <h2>Clientes</h2>
+  if (!!auth) {
+    return (
+      <>
+        <Menu />
+        <ContainerContent>
+          <h2>Clientes</h2>
 
-        <Lista arrayContent={clientesList} handleDel={handleDel} />
-      </ContainerContent>
-    </>
-  );
+          <Lista arrayContent={clientesList} handleDel={handleDel} />
+        </ContainerContent>
+      </>
+    );
+  } else {
+    return <Navigate replace to="/" />;
+  }
 };

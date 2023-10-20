@@ -16,8 +16,14 @@ export const useUserService = () => {
         await httpClient.put<User>(url, usuario)
     }
 
+    const logar = async (usuario: User) : Promise<void> => {
+        const url : string = `${resourceUrl}/login/${usuario.usuario}/${usuario.senha}`
+        const response: AxiosResponse<User> = await httpClient.get<User>(url)
+    }
+
     return {
         salvar,
-        atualizar
+        atualizar,
+        logar
     }
 }
