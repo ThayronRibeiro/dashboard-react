@@ -21,6 +21,8 @@ export const Menu = () => {
   const authRemove = () => {
     localStorage.setItem("authenticated", "false");
     localStorage.setItem("imgData", "");
+    localStorage.removeItem("acessoToken");
+    localStorage.removeItem("userId");
     nav("/");
   };
 

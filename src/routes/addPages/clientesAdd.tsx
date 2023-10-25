@@ -9,11 +9,15 @@ import alertify from "alertifyjs";
 // import { ClientesType } from "../clientes";
 import { AddContainer } from "../../styles/ClientePage";
 import { Users } from "../cadastro";
+import { Client } from "app/models/clients";
+import { useClientService } from "app/services";
 
 export const ClientesAdd = () => {
-  const [name, setName] = useState("");
+  const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [confirmEmail, setConfirmEmail] = useState("");
+
+  const service = useClientService();
 
   const [clientes, setClientes] = useState<any[]>([]);
 
@@ -68,47 +72,69 @@ export const ClientesAdd = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data: any) => {
-    if (clientesDb) {
-      const parseClientes = JSON.parse(clientesDb);
-      parseClientes.push({
-        //key: parseClientes.length + 1,
-        key: parseInt(genCliente) + 1,
-        id: uuid(),
-        name,
-        email,
-        userAuthId: userAuthId,
-        selected: false,
-      });
-      localStorage.setItem("clientesDb", JSON.stringify(parseClientes));
-    } else {
-      if (userAuthId) {
-        clientes.push({
-          // key: clientes.length + 1,
-          key: parseInt(genCliente) + 1,
-          id: uuid(),
-          name,
-          email,
-          userAuthId: userAuthId,
-          selected: false,
-        });
-        localStorage.setItem("clientesDb", JSON.stringify(clientes));
+  const onSubmit = () => {
+    const clientSaved: Client = {
+      nome,
+      email,
+    };
+
+    if (email !== confirmEmail) {
+      let div = document.getElementById("form");
+      if (div != null) {
+        div.innerHTML = `<p>Os emails não coincidem!</p>`;
       }
+    } else {
+      service
+        .salvar(clientSaved)
+        .then(() => {
+          alertify.success("Cliente cadastrado com sucesso!");
+          nav("/clientes/");
+        })
+        .catch(() => {
+          alertify.error("Cliente não foi cadastrado!");
+        });
     }
 
-    const users = localStorage.getItem("usersDb");
-    if (users) {
-      const parseUsers = JSON.parse(users);
-      const altGenerator = parseUsers.find(
-        (user: any) => user.id === userAuthId
-      );
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      altGenerator.genCliente = parseInt(genCliente) + 1;
-      localStorage.setItem("usersDb", JSON.stringify(parseUsers));
-    }
+    // if (clientesDb) {
+    //   const parseClientes = JSON.parse(clientesDb);
+    //   parseClientes.push({
+    //     //key: parseClientes.length + 1,
+    //     key: parseInt(genCliente) + 1,
+    //     id: uuid(),
+    //     name,
+    //     email,
+    //     userAuthId: userAuthId,
+    //     selected: false,
+    //   });
+    //   localStorage.setItem("clientesDb", JSON.stringify(parseClientes));
+    // } else {
+    //   if (userAuthId) {
+    //     clientes.push({
+    //       // key: clientes.length + 1,
+    //       key: parseInt(genCliente) + 1,
+    //       id: uuid(),
+    //       name,
+    //       email,
+    //       userAuthId: userAuthId,
+    //       selected: false,
+    //     });
+    //     localStorage.setItem("clientesDb", JSON.stringify(clientes));
+    //   }
+    // }
 
-    alertify.success("Cliente cadastrado com sucesso!");
-    nav("/clientes/");
+    // const users = localStorage.getItem("usersDb");
+    // if (users) {
+    //   const parseUsers = JSON.parse(users);
+    //   const altGenerator = parseUsers.find(
+    //     (user: any) => user.id === userAuthId
+    //   );
+    //   // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    //   altGenerator.genCliente = parseInt(genCliente) + 1;
+    //   localStorage.setItem("usersDb", JSON.stringify(parseUsers));
+    // }
+
+    // alertify.success("Cliente cadastrado com sucesso!");
+    // nav("/clientes/");
   };
 
   const backCliente = () => {
@@ -123,15 +149,15 @@ export const ClientesAdd = () => {
           <h2>Adicionar cliente</h2>
 
           <form onSubmit={handleSubmit(onSubmit)}>
-            <label htmlFor="name">Nome</label>
+            <label htmlFor="nome">Nome</label>
             <InputField
               type="text"
               placeholder="Informe o nome do cliente"
               id="name"
-              value={name}
+              value={nome}
               {...register("name", { required: true })}
-              onChange={(e) => setName(e.target.value)}
-              errors={errors.name}
+              onChange={(e) => setNome(e.target.value)}
+              errors={errors.nome}
             />
             <label htmlFor="email">Email</label>
             <InputField
@@ -153,6 +179,7 @@ export const ClientesAdd = () => {
               onChange={(e) => setConfirmEmail(e.target.value)}
               errors={errors.confirmEmail}
             />
+            <div id="form"></div>
             <input value="Salvar" type="submit" />
             <button onClick={backCliente}>Voltar</button>
           </form>

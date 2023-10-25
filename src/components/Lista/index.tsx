@@ -5,6 +5,7 @@ import { FaTrash, FaPlus, FaEdit } from "react-icons/fa";
 import { RefObject, useEffect, useState } from "react";
 import alertify from "alertifyjs";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { Client } from "app/models/clients";
 
 type ListaProps = {
   arrayContent: ClientesType[];
@@ -98,7 +99,7 @@ export const Lista = ({ arrayContent, handleDel }: ListaProps) => {
           <SC.TableBody ref={parent as RefObject<HTMLTableSectionElement>}>
             {arrayContent && (
               <>
-                {arrayContent.map((item) => {
+                {arrayContent.map((item: Client) => {
                   return (
                     <>
                       <SC.TableContent>
@@ -109,7 +110,7 @@ export const Lista = ({ arrayContent, handleDel }: ListaProps) => {
                             }
                           }}
                         >
-                          {item.key}
+                          {item.id}
                         </SC.TableRowItem>
                         <SC.TableRowItem
                           onClick={() => {
@@ -118,7 +119,7 @@ export const Lista = ({ arrayContent, handleDel }: ListaProps) => {
                             }
                           }}
                         >
-                          {item.name}
+                          {item.nome}
                         </SC.TableRowItem>
                         <SC.TableRowItem
                           onClick={() => {

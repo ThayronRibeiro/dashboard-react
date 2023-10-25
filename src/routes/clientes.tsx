@@ -4,6 +4,11 @@ import { Menu } from "../components/Menu";
 import { Navigate, useNavigate } from "react-router-dom";
 import { ContainerContent } from "../styles/ContainerContent";
 import alertify from "alertifyjs";
+import ClientTable from "components/Clients/Table";
+import { useClientService } from "app/services";
+import { User } from "app/models/users";
+import { Layout } from "components/common/Layout";
+import { Client } from "app/models/clients";
 
 //** Tipagem de Cliente */
 export type ClientesType = {
@@ -20,10 +25,14 @@ export const Clientes = () => {
 
   alertify.set("notifier", "position", "top-right");
 
+  const service = useClientService();
+
   const [clientesList, setClientesList] = useState<ClientesType[]>([]);
+  const [clientList, setClientList] = useState<Client[]>([]);
   const clientesDb = localStorage.getItem("clientesDb");
   const userAuthId = localStorage.getItem("userAuthId");
   const auth = localStorage.getItem("authenticated");
+
   const nav = useNavigate();
 
   useEffect(() => {
@@ -34,42 +43,50 @@ export const Clientes = () => {
     }
   }, [auth, nav]);
 
-  useEffect(() => {
-    if (clientesDb) {
-      const parseClientes = JSON.parse(clientesDb);
-      const correctClientes = parseClientes.filter(
-        (cliente: ClientesType) => cliente.userAuthId === userAuthId
-      );
-      //console.log(correctClientes);
-      setClientesList(correctClientes);
-    }
-  }, [clientesList, clientesDb, userAuthId]);
+  // useEffect(() => {
+  //   if (clientesDb) {
+  //     const parseClientes = JSON.parse(clientesDb);
+  //     const correctClientes = parseClientes.filter(
+  //       (cliente: ClientesType) => cliente.userAuthId === userAuthId
+  //     );
+  //     //console.log(correctClientes);
+  //     setClientesList(correctClientes);
+  //   }
+  // }, [clientesList, clientesDb, userAuthId]);
 
-  const handleDel = () => {
-    if (clientesDb) {
-      const parseClientes = JSON.parse(clientesDb!);
-      const clientesSaved = parseClientes.filter(
-        (cliente: ClientesType) => cliente.selected !== true
-      );
-      if (clientesSaved) {
-        setClientesList(clientesSaved);
-        localStorage.setItem("clientesDb", JSON.stringify(clientesSaved));
-        console.log(clientesSaved);
-      }
-    } else {
-      alertify.error("Não há clientes cadastrados para serem excluídos!");
-    }
-  };
+  useEffect(() => {
+    service.listar().then((value) => {
+      setClientList(value);
+      console.log(value);
+    });
+  }, [userAuthId, clientList]);
+
+  // const handleDel = () => {
+  //   if (clientesDb) {
+  //     const parseClientes = JSON.parse(clientesDb!);
+  //     const clientesSaved = parseClientes.filter(
+  //       (cliente: ClientesType) => cliente.selected !== true
+  //     );
+  //     if (clientesSaved) {
+  //       setClientesList(clientesSaved);
+  //       localStorage.setItem("clientesDb", JSON.stringify(clientesSaved));
+  //       console.log(clientesSaved);
+  //     }
+  //   } else {
+  //     alertify.error("Não há clientes cadastrados para serem excluídos!");
+  //   }
+  // };
 
   if (!!auth) {
     return (
       <>
-        <Menu />
-        <ContainerContent>
-          <h2>Clientes</h2>
+        <Layout title="Clientes">
+          <>
+            <Lista arrayContent={clientList} />
 
-          <Lista arrayContent={clientesList} handleDel={handleDel} />
-        </ContainerContent>
+            <ClientTable clients={clientList || []} />
+          </>
+        </Layout>
       </>
     );
   } else {

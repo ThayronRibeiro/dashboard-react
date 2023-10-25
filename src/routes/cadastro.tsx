@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import alertify from "alertifyjs";
 import { v4 as uuid } from "uuid";
 
-import {useUserService} from '../app/services'
+import { useUserService } from "../app/services";
 
 import "alertifyjs/build/alertify.min.js";
 import "alertifyjs/build/css/alertify.min.css";
@@ -21,7 +21,6 @@ export type Users = {
 };
 
 export const Cadastro = () => {
-
   const service = useUserService();
   const [usuario, setusuario] = useState("");
   const [senha, setsenha] = useState("");
@@ -42,34 +41,32 @@ export const Cadastro = () => {
     formState: { errors },
   } = useForm();
 
-
-
   const onSubmit = () => {
-
     const usuarioSaved: User = {
       usuario,
-      senha
-    }
+      senha,
+    };
 
-    if(senha !== confirmsenha){
+    if (senha !== confirmsenha) {
       let div = document.getElementById("form");
       if (div != null) {
         div.innerHTML = `<p>As senhas não coincidem!</p>`;
       }
-    }
-    else{
+    } else {
+      usuarioSaved.acessoToken = uuid();
+      console.log(usuarioSaved);
       service
-      .salvar(usuarioSaved)
-      .then(()=>{
-        alertify.success("Usuário cadastrado com sucesso!");
-        navigate("/");
-      })
-      .catch((err)=>{
-        alertify.error("Usuário já cadastrado! Por favor utilize outro usuário!");
-      })
-
+        .salvar(usuarioSaved)
+        .then(() => {
+          alertify.success("Usuário cadastrado com sucesso!");
+          navigate("/");
+        })
+        .catch((err) => {
+          alertify.error(
+            "Usuário já cadastrado! Por favor utilize outro usuário!"
+          );
+        });
     }
-
 
     /*
     const users = localStorage.getItem("usersDb");
