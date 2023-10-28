@@ -25,12 +25,26 @@ export const useClientService = () => {
     const response: AxiosResponse<Client[]> = await httpClient.get(
       `${resourceUrl}/${usuarioID}`
     );
-    console.log(`Link: ${resourceUrl}/${usuarioID}`);
     return response.data;
+  };
+
+  const infoCliente = async (id): Promise<Client> => {
+    const response: AxiosResponse<Client> = await httpClient.get(
+      `${resourceUrl}/id/${id}`
+    );
+    return response.data;
+  };
+
+  const deletar = async (id) => {
+    const response: AxiosResponse = await httpClient.delete(
+      `${resourceUrl}/id/${id}`
+    );
   };
 
   return {
     salvar,
     listar,
+    infoCliente,
+    deletar,
   };
 };

@@ -158,6 +158,7 @@ export const ClientesAdd = () => {
               {...register("name", { required: true })}
               onChange={(e) => setNome(e.target.value)}
               errors={errors.nome}
+              autoComplete="off"
             />
             <label htmlFor="email">Email</label>
             <InputField
@@ -168,6 +169,7 @@ export const ClientesAdd = () => {
               {...register("email", { required: true })}
               onChange={(e) => setEmail(e.target.value)}
               errors={errors.email}
+              autoComplete="off"
             />
             <label htmlFor="confirmEmail">Confirmação de Email</label>
             <InputField
@@ -178,6 +180,7 @@ export const ClientesAdd = () => {
               {...register("confirmEmail", { required: true })}
               onChange={(e) => setConfirmEmail(e.target.value)}
               errors={errors.confirmEmail}
+              autoComplete="off"
             />
             <div id="form"></div>
             <input value="Salvar" type="submit" />

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import alertify from "alertifyjs";
 import { v4 as uuid } from "uuid";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 import { useUserService } from "../app/services";
 
@@ -27,6 +28,8 @@ export const Cadastro = () => {
   const [confirmsenha, setConfirmsenha] = useState("");
   //const users = [{ usuario: "admin", senha: "123" }];
   const [usersDb, setUsersDb] = useState<Users[]>([]);
+
+  const [parent, enableAnimations] = useAutoAnimate({ duration: 1000 });
 
   alertify.set("notifier", "position", "top-right");
   document.title = "Cadastro | Dashboard ReactJs";
@@ -150,6 +153,7 @@ export const Cadastro = () => {
             {...register("usuario", { required: true })}
             onChange={(e) => setusuario(e.target.value.toLowerCase())}
             errors={errors.usuario && !usuario}
+            autoComplete="off"
           />
           {errors.usuario && !usuario && <p>Digite seu usuário!</p>}
           <label>Senha</label>
@@ -160,6 +164,7 @@ export const Cadastro = () => {
             {...register("senha", { required: true })}
             onChange={(e) => setsenha(e.target.value)}
             errors={errors.senha && !senha}
+            autoComplete="off"
           />
           {errors.senha && !senha && <p>Digite sua senha!</p>}
           <label>Confirmação de senha</label>
@@ -170,6 +175,7 @@ export const Cadastro = () => {
             {...register("confirmsenha", { required: true })}
             onChange={(e) => setConfirmsenha(e.target.value)}
             errors={errors.confirmsenha && !confirmsenha}
+            autoComplete="off"
           />
           {errors.senha && !senha && <p>Digite sua senha!</p>}
           <div id="form"></div>

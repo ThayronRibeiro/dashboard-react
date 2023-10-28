@@ -1,6 +1,8 @@
 import { ChangeEvent, useEffect, useState } from "react";
 //import { InputFiles } from "typescript";
 import { Menu } from "../components/Menu";
+import { useUserService } from "app/services";
+import alertify from "alertifyjs";
 import {
   ConfigContainer,
   ImgUser,
@@ -17,14 +19,37 @@ import * as SC from "../styles/ContainerContent";
 import { Users } from "./cadastro";
 
 import { FaCaretDown, FaCaretUp } from "react-icons/fa";
+import { User } from "app/models/users";
 
 export const Configuracoes = () => {
   document.title = "Configurações | Dashboard ReactJs";
+  alertify.set("notifier", "position", "top-right");
+
+  const service = useUserService();
+
+  const variants = {
+    open: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        y: { stiffness: 1000, velocity: -100 },
+      },
+    },
+    closed: {
+      y: -10,
+      opacity: 0,
+      transition: {
+        y: { stiffness: 1000, velocity: -100 },
+      },
+    },
+  };
 
   let base64code = "";
   const [file, setFile] = useState<any>();
   const [fileDataURL, setFileDataURL] = useState();
-  const [usersAuthInfo, setUsersAuthInfo] = useState<Users>();
+  const [usersAuthInfo, setUsersAuthInfo] = useState<User>();
+
+  const [atualizarCadastro, setAtualizarCadastro] = useState(true);
 
   const [contentCadastro, setContentCadastro] = useState(true);
   const [contentApp, setContentApp] = useState(true);
@@ -73,22 +98,26 @@ export const Configuracoes = () => {
       );
       account.imgUser = fileString;
       setUsersAuthInfo(account);
-      if (usersAuthInfo) {
-        usersAuthInfo.imgUser = fileString;
-      }
-      localStorage.setItem("usersDb", JSON.stringify(usersArray));
+      // if (usersAuthInfo) {
+      //   usersAuthInfo.imgUser = fileString;
+      // }
+      // localStorage.setItem("usersDb", JSON.stringify(usersArray));
     }
   };
 
   useEffect(() => {
-    if (usersDb) {
-      const usersArray = JSON.parse(usersDb);
-      const account = usersArray.find(
-        (user: any) => user.id === localStorage.getItem("userAuthId")
-      );
-      setUsersAuthInfo(account);
-    }
-  }, [usersAuthInfo, usersDb]);
+    service
+      .buscarInfo(localStorage.getItem("acessoToken"))
+      .then((value) => {
+        setUsersAuthInfo(value);
+        setAtuNomeUsuario(value.nome);
+      })
+      .catch((value) => console.log(value));
+  }, []);
+
+  const [atuNomeUsario, setAtuNomeUsuario] = useState<string>(
+    usersAuthInfo?.nome || ""
+  );
 
   const getBase64 = (file: any): any => {
     let reader = new FileReader();
@@ -118,6 +147,26 @@ export const Configuracoes = () => {
     }
   };
 
+  const handleAtualizar = () => {
+    const usuarioAtualizado: User = {
+      id: usersAuthInfo.id,
+      usuario: usersAuthInfo.usuario,
+      nome: atuNomeUsario,
+      senha: usersAuthInfo.senha,
+      acessoToken: usersAuthInfo.acessoToken,
+      dataCadastro: usersAuthInfo.dataCadastro,
+    };
+
+    service
+      .atualizar(usuarioAtualizado)
+      .then(() => {
+        alertify.success("Usuário atualizado com sucesso!");
+      })
+      .catch(() => {
+        alertify.error("Ocorreu um erro!");
+      });
+  };
+
   return (
     <>
       <Menu />
@@ -125,7 +174,7 @@ export const Configuracoes = () => {
         <h2>Configurações</h2>
         <ConfigContainer>
           <ImgUserArea id="photoUserArea">
-            <ImgUser url={usersAuthInfo?.imgUser} id="photo" />
+            <ImgUser id="photo" />
             <label htmlFor="photoUser" style={{ cursor: "pointer" }}>
               <div>
                 <span>Mudar foto</span>
@@ -140,7 +189,7 @@ export const Configuracoes = () => {
             ></input>
             <span
               style={{ color: "red", cursor: "pointer", marginTop: "-20px" }}
-              onClick={() => handleDelPhoto(usersAuthInfo?.imgUser)}
+              // onClick={() => handleDelPhoto(usersAuthInfo?.imgUser)}
             >
               Excluir foto
             </span>
@@ -152,7 +201,12 @@ export const Configuracoes = () => {
             <h3>Configurações de Cadastro</h3>
             {contentCadastro ? <FaCaretUp /> : <FaCaretDown />}
           </TitleConfigToogle>
-          <ContentToogle visibleToogle={contentCadastro}>
+          <ContentToogle
+            visibleToogle={contentCadastro}
+            variants={variants}
+            initial={contentCadastro ? "open" : "closed"}
+            animate={contentCadastro ? "open" : "closed"}
+          >
             <FieldConfig htmlFor="usuario">Usuário</FieldConfig>
             <InputField
               id="usuario"
@@ -161,11 +215,12 @@ export const Configuracoes = () => {
               disabled
             />
 
-            <FieldConfig htmlFor="usuario">Nome</FieldConfig>
+            <FieldConfig htmlFor="nome">Nome</FieldConfig>
             <InputField
-              id="usuario"
+              id="nome"
               placeholder=""
-              value={usersAuthInfo?.usuario}
+              value={atuNomeUsario}
+              onChange={(e) => setAtuNomeUsuario(e.target.value)}
             />
 
             <FieldConfig htmlFor="usuario">Senha</FieldConfig>
@@ -176,7 +231,7 @@ export const Configuracoes = () => {
             />
           </ContentToogle>
 
-          <TitleConfigToogle onClick={() => setContentApp(!contentApp)}>
+          {/* <TitleConfigToogle onClick={() => setContentApp(!contentApp)}>
             <h3>Configurações da Aplicação</h3>
             {contentApp ? <FaCaretUp /> : <FaCaretDown />}
           </TitleConfigToogle>
@@ -202,7 +257,9 @@ export const Configuracoes = () => {
               placeholder=""
               value={usersAuthInfo?.senha}
             />
-          </ContentToogle>
+          </ContentToogle> */}
+
+          <button onClick={handleAtualizar}>Salvar</button>
         </ConfigContainer>
       </SC.ContainerContent>
     </>

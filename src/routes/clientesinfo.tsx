@@ -7,13 +7,17 @@ import { ClientesType } from "./clientes";
 import { FaSave, FaTrash } from "react-icons/fa";
 
 import * as SC from "../styles/ClientePage";
+import { useClientService } from "app/services";
+import { Client } from "app/models/clients";
 
 export const ClientesInfo = () => {
   const { id } = useParams();
   const nav = useNavigate();
   const clientesDb = localStorage.getItem("clientesDb");
 
-  const [cliente, setCliente] = useState<ClientesType>();
+  const service = useClientService();
+
+  const [cliente, setCliente] = useState<Client>();
 
   useEffect(() => {
     if (clientesDb) {
@@ -25,6 +29,12 @@ export const ClientesInfo = () => {
       setCliente(searchCliente);
     }
   }, [clientesDb, id]);
+
+  useEffect(() => {
+    service.infoCliente(id).then((value) => {
+      setCliente(value);
+    });
+  }, [cliente]);
 
   return (
     <>
@@ -48,13 +58,13 @@ export const ClientesInfo = () => {
         <SC.ClienteContainer>
           <SC.ClienteTitle>
             <h2>
-              {cliente?.key} - {cliente?.name}
+              {cliente?.id} - {cliente?.nome}
             </h2>
           </SC.ClienteTitle>
           <SC.ClienteContent>
             {cliente && (
               <>
-                <span>Nome: {cliente.name}</span>
+                <span>Nome: {cliente.nome}</span>
                 <span>Email: {cliente.email}</span>
               </>
             )}

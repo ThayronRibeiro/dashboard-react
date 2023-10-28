@@ -1,5 +1,6 @@
 //import { FaRegIdBadge } from "react-icons/fa";
 import styled from "styled-components";
+import { motion } from "framer-motion";
 
 import userBlank from "../assets/images/user.png";
 
@@ -58,7 +59,7 @@ type ContentToogleProps = {
   visibleToogle?: boolean;
 };
 
-export const ContentToogle = styled.div<ContentToogleProps>`
+export const ContentToogle = styled(motion.div)<ContentToogleProps>`
   transition: all ease 0.5s;
   width: 100%;
   display: ${(props) => (props.visibleToogle ? "flex" : "none")};

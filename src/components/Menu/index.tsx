@@ -6,15 +6,50 @@ import {
   FaHome,
   FaSignOutAlt,
 } from "react-icons/fa";
-import { useState, useEffect } from "react";
+import { useState, useEffect, RefObject } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Users } from "../../routes/cadastro";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { AnimatePresence } from "framer-motion";
 
 export const Menu = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [menuConfigOpen, setMenuConfigOpen] = useState(false);
   const usersDb = localStorage.getItem("usersDb");
   const [usersAuthInfo, setUsersAuthInfo] = useState<Users>();
+  const [parent, enableAnimations] = useAutoAnimate({ duration: 1000 });
+
+  const variants = {
+    open: {
+      x: 0,
+      opacity: 1,
+      transition: {
+        x: { stiffness: 1000, velocity: -100 },
+      },
+    },
+    closed: {
+      x: -100,
+      opacity: 0,
+      transition: {
+        x: { stiffness: 1000, velocity: -100 },
+      },
+    },
+  };
+
+  const variantsMenuConfig = {
+    open: {
+      opacity: 1,
+      transition: {
+        x: { stiffness: 1000, velocity: -100 },
+      },
+    },
+    closed: {
+      opacity: 0,
+      transition: {
+        x: { stiffness: 1000, velocity: -100 },
+      },
+    },
+  };
 
   const nav = useNavigate();
 
@@ -58,6 +93,15 @@ export const Menu = () => {
 
       {menuConfigOpen && (
         <SC.MenuConfigContainer
+          variants={variantsMenuConfig}
+          initial="closed"
+          animate={menuConfigOpen ? "open" : "closed"}
+          exit={{ opacity: 0 }}
+          transition={{
+            duration: 0.8,
+            staggerChildren: 0.015,
+            staggerDirection: menuOpen ? 1 : -1,
+          }}
           onClick={() => setMenuConfigOpen(!menuConfigOpen)}
 
           //onClickCapture={() => setMenuConfigOpen(!menuConfigOpen)}
@@ -83,28 +127,40 @@ export const Menu = () => {
       )}
 
       {menuOpen && (
-        <SC.MenuOpen>
-          <div>
-            <FaArrowLeft onClick={() => setMenuOpen(!menuOpen)} />
-          </div>
-          <ul>
-            <li>
-              <Link to="/home" onClick={() => setMenuOpen(!menuOpen)}>
-                <FaHome /> Home
-              </Link>
-            </li>
-            <li>
-              <Link to="/clientes" onClick={() => setMenuOpen(!menuOpen)}>
-                Clientes
-              </Link>
-            </li>
-            <li>
-              <Link to="/novo" onClick={() => setMenuOpen(!menuOpen)}>
-                Novo
-              </Link>
-            </li>
-          </ul>
-        </SC.MenuOpen>
+        <AnimatePresence>
+          <SC.MenuOpen
+            variants={variants}
+            initial="closed"
+            animate={menuOpen ? "open" : "closed"}
+            exit={{ opacity: 0 }}
+            transition={{
+              duration: 0.8,
+              staggerChildren: 0.015,
+              staggerDirection: menuOpen ? 1 : -1,
+            }}
+          >
+            <div>
+              <FaArrowLeft onClick={() => setMenuOpen(!menuOpen)} />
+            </div>
+            <ul>
+              <li>
+                <Link to="/home" onClick={() => setMenuOpen(!menuOpen)}>
+                  <FaHome /> Home
+                </Link>
+              </li>
+              <li>
+                <Link to="/clientes" onClick={() => setMenuOpen(!menuOpen)}>
+                  Clientes
+                </Link>
+              </li>
+              <li>
+                <Link to="/novo" onClick={() => setMenuOpen(!menuOpen)}>
+                  Novo
+                </Link>
+              </li>
+            </ul>
+          </SC.MenuOpen>
+        </AnimatePresence>
       )}
     </>
   );

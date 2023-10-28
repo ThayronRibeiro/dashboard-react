@@ -57,7 +57,6 @@ export const Clientes = () => {
   useEffect(() => {
     service.listar().then((value) => {
       setClientList(value);
-      console.log(value);
     });
   }, [userAuthId, clientList]);
 

@@ -14,7 +14,7 @@ export const useUserService = () => {
   };
 
   const atualizar = async (usuario: User): Promise<void> => {
-    const url: string = `${resourceUrl}/${usuario.id}`;
+    const url: string = `${resourceUrl}/${usuario.acessoToken}`;
     await httpClient.put<User>(url, usuario);
   };
 
@@ -27,7 +27,13 @@ export const useUserService = () => {
 
   const listar = async (): Promise<User[]> => {
     const response: AxiosResponse<User[]> = await httpClient.get(resourceUrl);
-    //console.log(`Teste: ${JSON.stringify(response.data)}`);
+    return response.data;
+  };
+
+  const buscarInfo = async (acesso_token): Promise<User> => {
+    const response: AxiosResponse<User> = await httpClient.get(
+      `${resourceUrl}/${acesso_token}`
+    );
     return response.data;
   };
 
@@ -36,5 +42,6 @@ export const useUserService = () => {
     atualizar,
     logar,
     listar,
+    buscarInfo,
   };
 };

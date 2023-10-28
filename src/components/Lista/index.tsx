@@ -6,6 +6,7 @@ import { RefObject, useEffect, useState } from "react";
 import alertify from "alertifyjs";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { Client } from "app/models/clients";
+import { useClientService } from "app/services";
 
 type ListaProps = {
   arrayContent: ClientesType[];
@@ -25,7 +26,9 @@ export const Lista = ({ arrayContent, handleDel }: ListaProps) => {
 
   const clientesDb = localStorage.getItem("clientesDb");
 
-  const [parent, enableAnimations] = useAutoAnimate();
+  const [parent, enableAnimations] = useAutoAnimate({ duration: 300 });
+
+  const service = useClientService();
 
   useEffect(() => {
     if (clientesDb) {
@@ -45,7 +48,7 @@ export const Lista = ({ arrayContent, handleDel }: ListaProps) => {
     }
   }
 
-  const handleDelete = (id: string | undefined) => {
+  const handleDelete = (id: string) => {
     const parseClientes = JSON.parse(clientesDb!);
     if (id) {
       alertify
@@ -53,12 +56,20 @@ export const Lista = ({ arrayContent, handleDel }: ListaProps) => {
           "Excluir cliente",
           "Confirma a exclusão do cliente?",
           () => {
-            const tempTask = parseClientes.filter(
-              (del: ClientesType) => del.id !== id
-            );
-            setClientesList(tempTask!);
-            localStorage.setItem("clientesDb", JSON.stringify(tempTask));
-            alertify.success("Cliente excluído com sucesso!");
+            service
+              .deletar(id)
+              .then(() => {
+                alertify.success("Cliente excluído com sucesso!");
+              })
+              .catch(() => {
+                alertify.error("Cliente não foi excluído!");
+              });
+            // const tempTask = parseClientes.filter(
+            //   (del: ClientesType) => del.id !== id
+            // );
+            // setClientesList(tempTask!);
+            // localStorage.setItem("clientesDb", JSON.stringify(tempTask));
+            //alertify.success("Cliente excluído com sucesso!");
           },
           () => {}
         )
@@ -102,7 +113,7 @@ export const Lista = ({ arrayContent, handleDel }: ListaProps) => {
                 {arrayContent.map((item: Client) => {
                   return (
                     <>
-                      <SC.TableContent>
+                      <SC.TableContent key={item.id}>
                         <SC.TableRowItem
                           onClick={() => {
                             if (item.id) {

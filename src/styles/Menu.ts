@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { motion } from "framer-motion";
 
 export const Menu = styled.div`
   background-color: var(--normalBlue);
@@ -40,7 +41,7 @@ export const Menu = styled.div`
   }
 `;
 
-export const MenuOpen = styled.div`
+export const MenuOpen = styled(motion.nav)`
   position: fixed;
   top: 0;
   left: 0;
@@ -90,7 +91,7 @@ export const MenuOpen = styled.div`
   }
 `;
 
-export const MenuConfigContainer = styled.div`
+export const MenuConfigContainer = styled(motion.div)`
   position: fixed;
   top: 0;
   right: 0;

@@ -110,6 +110,9 @@ export const InputField = styled.input<InputFieldProps>`
   border: none;
   padding: 0 10px;
   border-radius: 5px;
+  -webkit-transition: all ease-in-out 0.15s;
+  -o-transition: all ease-in-out 0.15s;
+  transition: all ease-in-out 0.15s;
 
   &:focus {
     outline: ${(props) =>
