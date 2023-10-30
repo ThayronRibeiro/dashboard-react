@@ -154,7 +154,6 @@ export const Configuracoes = () => {
       nome: atuNomeUsario,
       senha: usersAuthInfo.senha,
       acessoToken: usersAuthInfo.acessoToken,
-      dataCadastro: usersAuthInfo.dataCadastro,
     };
 
     service

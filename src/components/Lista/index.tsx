@@ -7,6 +7,7 @@ import alertify from "alertifyjs";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { Client } from "app/models/clients";
 import { useClientService } from "app/services";
+import { Loader } from "components/common/Loader";
 
 type ListaProps = {
   arrayContent: ClientesType[];
@@ -22,7 +23,7 @@ export const Lista = ({ arrayContent, handleDel }: ListaProps) => {
     nav("/clientes/add");
   };
 
-  const [clientesList, setClientesList] = useState<ClientesType[]>([]);
+  const [clientesList, setClientesList] = useState<Client[]>([]);
 
   const clientesDb = localStorage.getItem("clientesDb");
 
@@ -40,7 +41,7 @@ export const Lista = ({ arrayContent, handleDel }: ListaProps) => {
   function handleCheckDel(id: string) {
     const parseClientes = JSON.parse(clientesDb!);
     const clienteChecked = parseClientes.find(
-      (cliente: ClientesType) => cliente.id === id
+      (cliente: Client) => cliente.id === id
     );
     if (clienteChecked) {
       clienteChecked.selected = !clienteChecked.selected;

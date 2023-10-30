@@ -151,7 +151,7 @@ export const ContainerCadastro = styled.div`
         background-image: url(${cadastroBg});
         background-size: cover;
         //background-color: var(--normalBlue);
-        border-right: var(--babyBlue) 15px solid;
+        border-right: white 10px solid;
       }
     }
 

@@ -98,11 +98,11 @@ export const MenuConfigContainer = styled(motion.div)`
   height: 100vh;
   width: 100vw;
   padding-left: 50vw; //posicionar na tela
-  z-index: 999;
+  z-index: 9999;
 
   h2 {
     position: absolute;
-    top: 11px;
+    top: 12px;
     right: 25px;
     color: var(--white);
     cursor: pointer;
