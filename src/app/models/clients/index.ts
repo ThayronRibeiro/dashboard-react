@@ -4,4 +4,5 @@ export interface Client {
   email?: string;
   usuarioId?: string;
   dataCadastro?: string;
+  dataAlteracao?: string;
 }

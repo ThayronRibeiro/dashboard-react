@@ -121,9 +121,9 @@ export const MenuConfigContainer = styled(motion.div)`
 `;
 
 export const MenuConfig = styled.div`
-  position: relative;
+  position: fixed;
   margin-top: 35px;
-  right: 0;
+  right: 3rem;
   display: flex;
   flex-direction: column;
   background-color: var(--white);

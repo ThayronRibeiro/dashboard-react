@@ -154,8 +154,8 @@ export const Menu = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/novo" onClick={() => setMenuOpen(!menuOpen)}>
-                  Novo
+                <Link to="/receitas" onClick={() => setMenuOpen(!menuOpen)}>
+                  Receitas
                 </Link>
               </li>
             </ul>
