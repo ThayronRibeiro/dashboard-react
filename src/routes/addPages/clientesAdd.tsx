@@ -1,6 +1,6 @@
 import { Menu } from "../../components/Menu";
 import { ContainerContent } from "../../styles/ContainerContent";
-import { InputField } from "../../styles/Form";
+import { InputField, TwoColumnInputs } from "../../styles/Form";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";

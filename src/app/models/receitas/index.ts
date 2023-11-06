@@ -1,0 +1,34 @@
+export interface Receita {
+  id?: string;
+  clienteId?: string;
+  usuarioId?: string;
+  dataCadastro?: string;
+  dataEntrega?: string;
+  longeOdEsf?: string;
+  longeOdCil?: string;
+  longeOdEixo?: string;
+  longeOdDnp?: string;
+  longeOdDp?: string;
+  longeOeEsf?: string;
+  longeOeCil?: string;
+  longeOeEixo?: string;
+  longeOeDnp?: string;
+  longeOeDp?: string;
+  pertoOdEsf?: string;
+  pertoOdCil?: string;
+  pertoOdEixo?: string;
+  pertoOdDnp?: string;
+  pertoOdDp?: string;
+  pertoOeEsf?: string;
+  pertoOeCil?: string;
+  pertoOeEixo?: string;
+  pertoOeDnp?: string;
+  pertoOeDp?: string;
+  descricaoLente?: string;
+  corLente?: string;
+  resina?: boolean;
+  cristal?: boolean;
+  highLife?: boolean;
+  observacao?: string;
+  dataAlteracao?: string;
+}

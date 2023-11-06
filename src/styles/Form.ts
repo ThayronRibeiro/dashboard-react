@@ -47,10 +47,18 @@ export const FormArea = styled.div<FormAreaProps>`
     display: flex;
     flex-direction: column;
     margin-bottom: 150px;
+    transition: all ease 0.5;
 
     p {
       margin-top: -10px;
+      margin-bottom: 0.2rem;
       color: red;
+      font-size: 0.7rem;
+    }
+
+    h5 {
+      padding-left: 1rem;
+      padding-top: 0.6rem;
     }
 
     label {
@@ -96,6 +104,45 @@ export const FormArea = styled.div<FormAreaProps>`
         (props.type = "Cadastro" ? "flex-start" : "center")};
     }
   }
+`;
+
+export const TwoColumnInputs = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 10px;
+`;
+
+export const ThreeColumnInputs = styled.div`
+  display: grid;
+  grid-template-columns: 2fr 2fr 2fr;
+  gap: 10px;
+`;
+
+export const ThreeColumnInputsFlex = styled.div`
+  display: grid;
+  grid-template-columns: 2fr 2fr 2fr;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+  }
+`;
+
+export const FourColumnInputs = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 10px;
+`;
+
+export const FiveColumnInputs = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  gap: 10px;
 `;
 
 type InputFieldProps = {
