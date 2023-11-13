@@ -4,11 +4,10 @@ import { useState, useEffect } from "react";
 import { SelectInput } from "styles/Select";
 
 interface SelectProps {
-  register?: () => void;
   value?: string;
 }
 
-export const Select = ({ register, value }: SelectProps) => {
+export const Select = ({ value }: SelectProps) => {
   const [dropClientList, setDropClientList] = useState<Client[]>([]);
   const [clienteSelect, setClienteSelect] = useState<string>("");
   const userAuthId = localStorage.getItem("userAuthId");
@@ -33,7 +32,6 @@ export const Select = ({ register, value }: SelectProps) => {
       <SelectInput
         name="clientes"
         id="clientes"
-        {...register}
         defaultValue={clienteSelect}
         onChange={(e) => setClienteSelect(e.target.value)}
       >

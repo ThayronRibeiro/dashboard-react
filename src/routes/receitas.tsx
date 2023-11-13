@@ -16,6 +16,8 @@ import { Select } from "components/common/Select";
 import { useReceitaService } from "app/services/receita.service";
 import alertify from "alertifyjs";
 import { Receita } from "app/models/receitas";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 export const Receitas: React.FC = () => {
   alertify.set("notifier", "position", "top-right");
@@ -23,19 +25,38 @@ export const Receitas: React.FC = () => {
   const userAuthId = localStorage.getItem("userAuthId");
   const [dropClientList, setDropClientList] = useState<Client[]>([]);
 
-  // useEffect(() => {
-  //   service
-  //     .listar()
-  //     .then((value) => {
-  //       if (value) {
-  //         setDropClientList(value);
-  //         //window.alert("Chegou");
-  //       }
-  //     })
-  //     .catch(() => {
-  //       console.log("Teste");
-  //     });
-  // }, [userAuthId, dropClientList]);
+  const schema = yup
+    .object()
+    .shape({
+      dataEntrega: yup.date(),
+      resinaCheck: yup.boolean(),
+      cristalCheck: yup.boolean(),
+      highLifeCheck: yup.boolean(),
+      descLente: yup.string().required(),
+      corLente: yup.string().required(),
+      obsLente: yup.string(),
+      longeOdEsf: yup.number().required(),
+      longeOdCil: yup.number().required(),
+      longeOdEixo: yup.number().required(),
+      longeOdDnp: yup.number().required(),
+      longeOdDp: yup.number().required(),
+      longeOeEsf: yup.number().required(),
+      longeOeCil: yup.number().required(),
+      longeOeEixo: yup.number().required(),
+      longeOeDnp: yup.number().required(),
+      longeOeDp: yup.number().required(),
+      pertoOdEsf: yup.number().required(),
+      pertoOdCil: yup.number().required(),
+      pertoOdEixo: yup.number().required(),
+      pertoOdDnp: yup.number().required(),
+      pertoOdDp: yup.number().required(),
+      pertoOeEsf: yup.number().required(),
+      pertoOeCil: yup.number().required(),
+      pertoOeEixo: yup.number().required(),
+      pertoOeDnp: yup.number().required(),
+      pertoOeDp: yup.number().required(),
+    })
+    .required();
 
   const [descLente, setDescLente] = useState("");
   const [corLente, setCorLente] = useState("");
@@ -76,7 +97,7 @@ export const Receitas: React.FC = () => {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm();
+  } = useForm({ resolver: yupResolver(schema) });
 
   const onInvalid = (errors) => console.error(errors);
 
@@ -111,7 +132,7 @@ export const Receitas: React.FC = () => {
       dataEntrega,
     };
 
-    console.log(receita);
+    console.log(errors);
 
     service
       .salvar(receita)
@@ -122,6 +143,8 @@ export const Receitas: React.FC = () => {
         alertify.error("Receita não cadastrada!");
       });
   };
+
+  useEffect(() => {}, [descLente]);
 
   return (
     <>
@@ -165,7 +188,7 @@ export const Receitas: React.FC = () => {
                       type="checkbox"
                       id="resinaCheck"
                       checked={resina}
-                      {...register("resinaCheck", { required: false })}
+                      {...register("resinaCheck")}
                       onChange={() => {
                         setResina(!resina);
                       }}
@@ -178,7 +201,7 @@ export const Receitas: React.FC = () => {
                       type="checkbox"
                       id="cristalCheck"
                       checked={cristal}
-                      {...register("cristalCheck", { required: false })}
+                      {...register("cristalCheck")}
                       onChange={() => {
                         setCristal(!cristal);
                       }}
@@ -191,38 +214,36 @@ export const Receitas: React.FC = () => {
                       type="checkbox"
                       id="highLifeCheck"
                       checked={highLife}
-                      {...register("highLifeCheck", { required: false })}
+                      {...register("highLifeCheck")}
                       onChange={() => {
                         setHighLife(!highLife);
                       }}
-                      errorsInput={errors.highLife}
                     />
                   </div>
                 </ThreeColumnInputsFlex>
                 <div>
                   <Controller
+                    control={control}
+                    name="descLente"
                     render={({ field }) => (
                       <Input
+                        {...register("descLente")}
                         id="descLente"
                         label="Descrição"
                         value={descLente}
-                        {...register("descLente", { required: true })}
                         onChange={setDescLente}
                         errorsInput={errors.descLente && !descLente}
                       />
                     )}
-                    name="descLente"
-                    control={control}
-                    rules={{ required: true }}
                   />
                   {errors.descLente && !descLente && <p>Campo obrigatório!</p>}
                   <Input
                     id="corLente"
                     label="Cor"
                     value={corLente}
-                    {...register("corLente", { required: true })}
-                    onChange={setCorLente}
                     errorsInput={errors.corLente && !corLente}
+                    {...register("corLente")}
+                    onChange={setCorLente}
                   />
                   {errors.corLente && !corLente && <p>Campo obrigatório!</p>}
                   <Input
@@ -230,7 +251,7 @@ export const Receitas: React.FC = () => {
                     label="Observação"
                     type="textarea"
                     value={obsLente}
-                    {...register("obsLente", { required: false })}
+                    {...register("obsLente")}
                     onChange={setObsLente}
                     errorsInput={errors.obsLente && !obsLente}
                   />
@@ -246,9 +267,10 @@ export const Receitas: React.FC = () => {
                       id="longeOdEsf"
                       label="Esf."
                       value={longeOdEsf}
-                      {...register("longeOdEsf", { required: true })}
-                      onChange={setLongeOdEsf}
+                      name="longeOdEsf"
+                      {...register("longeOdEsf")}
                       errorsInput={errors.longeOdEsf && !longeOdEsf}
+                      onChange={setLongeOdEsf}
                     />
                     {errors.longeOdEsf && !longeOdEsf && (
                       <p>Campo obrigatório!</p>
@@ -259,7 +281,7 @@ export const Receitas: React.FC = () => {
                       id="longeOdCil"
                       label="Cil."
                       value={longeOdCil}
-                      {...register("longeOdCil", { required: true })}
+                      {...register("longeOdCil")}
                       onChange={setLongeOdCil}
                       errorsInput={errors.longeOdCil && !longeOdCil}
                     />
@@ -272,7 +294,7 @@ export const Receitas: React.FC = () => {
                       id="longeOdEixo"
                       label="Eixo"
                       value={longeOdEixo}
-                      {...register("longeOdEixo", { required: true })}
+                      {...register("longeOdEixo")}
                       onChange={setLongeOdEixo}
                       errorsInput={errors.longeOdEixo && !longeOdEixo}
                     />
@@ -285,7 +307,7 @@ export const Receitas: React.FC = () => {
                       id="longeOdDnp"
                       label="Dnp."
                       value={longeOdDnp}
-                      {...register("longeOdDnp", { required: true })}
+                      {...register("longeOdDnp")}
                       onChange={setLongeOdDnp}
                       errorsInput={errors.longeOdDnp && !longeOdDnp}
                     />
@@ -298,7 +320,7 @@ export const Receitas: React.FC = () => {
                       id="longeOdDp"
                       label="Dp."
                       value={longeOdDp}
-                      {...register("longeOdDp", { required: true })}
+                      {...register("longeOdDp")}
                       onChange={setLongeOdDp}
                       errorsInput={errors.longeOdDp && !longeOdDp}
                     />
@@ -314,7 +336,7 @@ export const Receitas: React.FC = () => {
                       id="longeOeEsf"
                       label="Esf."
                       value={longeOeEsf}
-                      {...register("longeOeEsf", { required: true })}
+                      {...register("longeOeEsf")}
                       onChange={setLongeOeEsf}
                       errorsInput={errors.longeOeEsf && !longeOeEsf}
                     />
@@ -328,7 +350,7 @@ export const Receitas: React.FC = () => {
                       id="longeOeCil"
                       label="Cil."
                       value={longeOeCil}
-                      {...register("longeOeCil", { required: true })}
+                      {...register("longeOeCil")}
                       onChange={setLongeOeCil}
                       errorsInput={errors.longeOeCil && !longeOeCil}
                     />
@@ -341,7 +363,7 @@ export const Receitas: React.FC = () => {
                       id="longeOeEixo"
                       label="Eixo"
                       value={longeOeEixo}
-                      {...register("longeOeEixo", { required: true })}
+                      {...register("longeOeEixo")}
                       onChange={setLongeOeEixo}
                       errorsInput={errors.longeOeEixo && !longeOeEixo}
                     />
@@ -354,7 +376,7 @@ export const Receitas: React.FC = () => {
                       id="longeOeDnp"
                       label="Dnp."
                       value={longeOeDnp}
-                      {...register("longeOeDnp", { required: true })}
+                      {...register("longeOeDnp")}
                       onChange={setLongeOeDnp}
                       errorsInput={errors.longeOeDnp && !longeOeDnp}
                     />
@@ -367,7 +389,7 @@ export const Receitas: React.FC = () => {
                       id="longeOeDp"
                       label="Dp."
                       value={longeOeDp}
-                      {...register("longeOeDp", { required: true })}
+                      {...register("longeOeDp")}
                       onChange={setLongeOeDp}
                       errorsInput={errors.longeOeDp && !longeOeDp}
                     />
@@ -384,7 +406,7 @@ export const Receitas: React.FC = () => {
                       id="pertoOdEsf"
                       label="Esf."
                       value={pertoOdEsf}
-                      {...register("pertoOdEsf", { required: true })}
+                      {...register("pertoOdEsf")}
                       onChange={setPertoOdEsf}
                       errorsInput={errors.pertoOdEsf && !pertoOdEsf}
                     />
@@ -397,7 +419,7 @@ export const Receitas: React.FC = () => {
                       id="pertoOdCil"
                       label="Cil."
                       value={pertoOdCil}
-                      {...register("pertoOdCil", { required: true })}
+                      {...register("pertoOdCil")}
                       onChange={setPertoOdCil}
                       errorsInput={errors.pertoOdCil && !pertoOdCil}
                     />
@@ -410,7 +432,7 @@ export const Receitas: React.FC = () => {
                       id="pertoOdEixo"
                       label="Eixo"
                       value={pertoOdEixo}
-                      {...register("pertoOdEixo", { required: true })}
+                      {...register("pertoOdEixo")}
                       onChange={setPertoOdEixo}
                       errorsInput={errors.pertoOdEixo && !pertoOdEixo}
                     />
@@ -423,7 +445,7 @@ export const Receitas: React.FC = () => {
                       id="pertoOdDnp"
                       label="Dnp."
                       value={pertoOdDnp}
-                      {...register("pertoOdDnp", { required: true })}
+                      {...register("pertoOdDnp")}
                       onChange={setPertoOdDnp}
                       errorsInput={errors.pertoOdDnp && !pertoOdDnp}
                     />
@@ -436,7 +458,7 @@ export const Receitas: React.FC = () => {
                       id="pertoOdDp"
                       label="Dp."
                       value={pertoOdDp}
-                      {...register("pertoOdDp", { required: true })}
+                      {...register("pertoOdDp")}
                       onChange={setPertoOdDp}
                       errorsInput={errors.pertoOdDp && !pertoOdDp}
                     />
@@ -452,7 +474,7 @@ export const Receitas: React.FC = () => {
                       id="pertoOeEsf"
                       label="Esf."
                       value={pertoOeEsf}
-                      {...register("pertoOeEsf", { required: true })}
+                      {...register("pertoOeEsf")}
                       onChange={setPertoOeEsf}
                       errorsInput={errors.pertoOeEsf && !pertoOeEsf}
                     />
@@ -466,7 +488,7 @@ export const Receitas: React.FC = () => {
                       id="pertoOeCil"
                       label="Cil."
                       value={pertoOeCil}
-                      {...register("pertoOeCil", { required: true })}
+                      {...register("pertoOeCil")}
                       onChange={setPertoOeCil}
                       errorsInput={errors.pertoOeCil && !pertoOeCil}
                     />
@@ -479,7 +501,7 @@ export const Receitas: React.FC = () => {
                       id="pertoOeEixo"
                       label="Eixo"
                       value={pertoOeEixo}
-                      {...register("pertoOeEixo", { required: true })}
+                      {...register("pertoOeEixo")}
                       onChange={setPertoOeEixo}
                       errorsInput={errors.pertoOeEixo && !pertoOeEixo}
                     />
@@ -492,7 +514,7 @@ export const Receitas: React.FC = () => {
                       id="pertoOeDnp"
                       label="Dnp."
                       value={pertoOeDnp}
-                      {...register("pertoOeDnp", { required: true })}
+                      {...register("pertoOeDnp")}
                       onChange={setPertoOeDnp}
                       errorsInput={errors.pertoOeDnp && !pertoOeDnp}
                     />
@@ -505,7 +527,7 @@ export const Receitas: React.FC = () => {
                       id="pertoOeDp"
                       label="Dp."
                       value={pertoOeDp}
-                      {...register("pertoOeDp", { required: true })}
+                      {...register("pertoOeDp")}
                       onChange={setPertoOeDp}
                       errorsInput={errors.pertoOeDp && !pertoOeDp}
                     />

@@ -1,5 +1,5 @@
 import { InputField } from "styles/Form";
-import { useForm } from "react-hook-form";
+import { UseFormRegisterReturn } from "react-hook-form";
 import { InputHTMLAttributes } from "react";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -8,6 +8,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   onChange?: (value) => void;
   required?: boolean;
+  register?: UseFormRegisterReturn;
   errorsInput?: any;
   errorIdentifier?: string;
 }
@@ -18,25 +19,18 @@ export const Input: React.FC<InputProps> = ({
   label,
   onChange,
   required,
+  register,
   errorsInput,
   ...props
 }: InputProps) => {
-  const {
-    register,
-    reset,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-
   return (
     <div>
       <label htmlFor={id}>{label}</label>
       <InputField
         type={type}
         id={id}
-        onChange={(e) => onChange(e.target.value)}
         autoComplete="off"
-        errors={errorsInput}
+        onChange={(e) => onChange(e.target.value)}
       />
       {/* {errorsInput && !`${errorIdentifier}` && <p>Campo obrigatório!</p>} */}
     </div>
