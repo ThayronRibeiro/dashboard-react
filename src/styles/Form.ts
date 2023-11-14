@@ -95,6 +95,22 @@ export const FormArea = styled.div<FormAreaProps>`
     input[type="submit"]:hover {
       opacity: 0.7;
     }
+
+    input[type="button"] {
+      height: 45px;
+      background-color: #a2a2a2;
+      color: var(--white);
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 20px;
+      transition: all ease 0.5s;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+    }
+
+    input[type="button"]:hover {
+      opacity: 0.7;
+    }
   }
 
   @media screen and (min-width: 768px) {
