@@ -62,15 +62,13 @@ export const Lista = ({ arrayContent, handleDel }: ListaProps) => {
               .then(() => {
                 alertify.success("Cliente excluído com sucesso!");
               })
-              .catch(() => {
-                alertify.error("Cliente não foi excluído!");
+              .catch((e) => {
+                if (e.response.status == 406) {
+                  alertify.error("Cliente não foi excluído teste!");
+                } else {
+                  alertify.error("Cliente não foi excluído!");
+                }
               });
-            // const tempTask = parseClientes.filter(
-            //   (del: ClientesType) => del.id !== id
-            // );
-            // setClientesList(tempTask!);
-            // localStorage.setItem("clientesDb", JSON.stringify(tempTask));
-            //alertify.success("Cliente excluído com sucesso!");
           },
           () => {}
         )
